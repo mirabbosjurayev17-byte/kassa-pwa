@@ -258,10 +258,10 @@ export default function ReportsPage() {
               <Line
                 type="monotone"
                 dataKey="foyda"
-                stroke="#0077CC"
+                stroke="#1883FF"
                 strokeWidth={2.5}
                 dot={false}
-                activeDot={{ r: 5, fill: '#0077CC' }}
+                activeDot={{ r: 5, fill: '#1883FF' }}
               />
             </LineChart>
           </ResponsiveContainer>

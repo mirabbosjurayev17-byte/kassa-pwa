@@ -17,10 +17,10 @@ export default {
         border: '#E2E8F0',
         subtle: '#F1F5F9',
         blue: {
-          DEFAULT: '#0077CC',
-          light: '#0EA5E9',
-          dark: '#004A80',
-          pale: '#E0F2FE',
+          DEFAULT: '#1883FF',   // accent — CTA, savdo, brand (Ocean Breeze)
+          light: '#99CAFF',     // badge, subtle highlight
+          dark: '#004EE0',      // emphasis, chart dark bar
+          pale: '#E3F2FF',      // hover bg, tint, card bg
         },
       },
       borderRadius: {
