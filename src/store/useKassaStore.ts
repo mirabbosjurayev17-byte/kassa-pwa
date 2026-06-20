@@ -21,8 +21,8 @@ type KassaState = {
 }
 
 const DEFAULT_SETTINGS: Settings = {
-  businessName: 'Olov Grill',
-  location: 'Chilonzor',
+  businessName: 'AutoParts Komilov',
+  location: 'Sergeli',
   currency: 'UZS',
   onboardingCompleted: false,
 }
@@ -83,7 +83,20 @@ export const useKassaStore = create<KassaState>()(
     {
       name: 'kassa-storage',
       storage: createJSONStorage(() => localStorage),
-      version: 1,
+      version: 2,
+      migrate: (persistedState, version) => {
+        if (version < 2) {
+          // v1 (eski "Olov Grill" demo) state'ini rad etamiz: yangi default settings +
+          // bo'sh transactions (bosh sahifa qayta seed qiladi). Aksiyalar merge orqali qo'shiladi.
+          return {
+            transactions: [] as Transaction[],
+            settings: DEFAULT_SETTINGS,
+            saleCategories: DEFAULT_SALE_CATEGORIES,
+            expenseCategories: DEFAULT_EXPENSE_CATEGORIES,
+          } as unknown as KassaState
+        }
+        return persistedState as KassaState
+      },
     }
   )
 )

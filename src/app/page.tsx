@@ -133,7 +133,7 @@ export default function Home() {
       </main>
 
       {/* DESKTOP */}
-      <main className="hidden lg:block px-10 py-8 max-w-6xl">
+      <main className="hidden lg:block px-10 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -155,46 +155,11 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Hero — full width: signature dominant va hech qachon overflow bo'lmaydi */}
-        <div className="mb-4">
-          <KpiHeroCard />
-        </div>
-
-        {/* Ikkilamchi KPI'lar */}
-        <div className="grid grid-cols-4 gap-4 mb-4">
-          <KpiCard
-            label="Bugungi savdo"
-            value={formatNumber(todaySales)}
-            hint={`${todaySalesTx.length} ta operatsiya`}
-            dotColor="blue"
-          />
-          <KpiCard
-            label="Bugungi xarajat"
-            value={formatNumber(todayExpenses)}
-            hint={`${todayTx.filter(t => t.type === 'expense').length} ta yozuv`}
-            dotColor="ink"
-          />
-          <KpiCard
-            label="O'rtacha chek"
-            value={formatNumber(avgTicket)}
-            hint="bugungi savdo"
-          />
-          <KpiCard
-            label="Marjin"
-            value={<>{margin}<span className="text-lg text-mute">%</span></>}
-            hint="bugungi marjin"
-          />
-        </div>
-
-        {/* Chart + o'ng ustun (prognoz + yozuvlar) */}
-        <div className="grid grid-cols-3 gap-4">
-          <div className="col-span-2">
-            <WeeklyChart />
-          </div>
-
-          <div className="space-y-4">
-            {/* Oylik prognoz */}
-            <div className="bg-surface rounded-2xl border border-border p-6">
+        {/* KPI region — hero (chap yarim, 2 row) + 2x2 metrikalar (o'ng yarim) */}
+        <div className="grid grid-cols-12 gap-4 mb-4">
+          <div className="col-span-6 row-span-2 flex flex-col gap-4">
+            <KpiHeroCard />
+            <div className="bg-surface rounded-2xl border border-border p-6 flex-1">
               <p className="text-xs text-mute font-bold uppercase tracking-wide mb-2">
                 Oylik prognoz
               </p>
@@ -203,9 +168,48 @@ export default function Home() {
               </p>
               <p className="text-xs text-mute mt-2">30 kunlik o'rtacha asosida</p>
             </div>
+          </div>
 
-            {/* Bugungi yozuvlar */}
-            <div className="bg-surface rounded-2xl border border-border p-6">
+          <div className="col-span-3">
+            <KpiCard
+              label="Bugungi savdo"
+              value={formatNumber(todaySales)}
+              hint={`${todaySalesTx.length} ta operatsiya`}
+              dotColor="blue"
+            />
+          </div>
+          <div className="col-span-3">
+            <KpiCard
+              label="Bugungi xarajat"
+              value={formatNumber(todayExpenses)}
+              hint={`${todayTx.filter(t => t.type === 'expense').length} ta yozuv`}
+              dotColor="ink"
+            />
+          </div>
+          <div className="col-span-3">
+            <KpiCard
+              label="O'rtacha chek"
+              value={formatNumber(avgTicket)}
+              hint="bugungi savdo"
+            />
+          </div>
+          <div className="col-span-3">
+            <KpiCard
+              label="Marjin"
+              value={<>{margin}<span className="text-lg text-mute">%</span></>}
+              hint="bugungi marjin"
+            />
+          </div>
+        </div>
+
+        {/* Chart + transactions */}
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-8">
+            <WeeklyChart />
+          </div>
+
+          <div className="col-span-4">
+            <div className="bg-surface rounded-2xl border border-border p-6 h-full">
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-lg font-bold">Bugungi yozuvlar</h2>
                 <Link href="/transactions" className="text-xs text-blue font-bold">

@@ -41,7 +41,7 @@ export function KpiHeroCard() {
       </div>
 
       {/* SIGNATURE RAQAM — fluid clamp (320px..mobil), desktop'da text-7xl (hero full-width) */}
-      <p className="text-[clamp(2.25rem,9vw,3rem)] lg:text-7xl font-black tabular-nums text-ink tracking-tight leading-none mt-4">
+      <p className="text-[clamp(2.25rem,9vw,3rem)] lg:text-[clamp(3rem,4.2vw,4.5rem)] font-black tabular-nums text-ink tracking-tight leading-none mt-4">
         {formatNumber(todayProfit)}
       </p>
       <p className="text-sm text-mute font-medium mt-2">
