@@ -20,13 +20,13 @@ export function TransactionItem({ transaction, allCategories, variant = 'mobile'
 
   return (
     <div className="flex items-center gap-3">
-      <div className={`w-9 h-9 lg:w-10 lg:h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-        isSale ? 'bg-blue-pale' : 'bg-subtle'
+      <div className={`w-9 h-9 lg:w-10 lg:h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+        isSale ? 'bg-blue/10' : 'bg-teal/10'
       }`}>
         {isSale ? (
-          <ArrowUp size={16} strokeWidth={2.5} className="text-blue-dark" />
+          <ArrowUp size={15} strokeWidth={2.5} className="text-blue" />
         ) : (
-          <ArrowDown size={16} strokeWidth={2.5} className="text-ink" />
+          <ArrowDown size={15} strokeWidth={2.5} className="text-teal-dark" />
         )}
       </div>
       <div className="flex-1 min-w-0">
@@ -36,7 +36,7 @@ export function TransactionItem({ transaction, allCategories, variant = 'mobile'
           {transaction.note && ` · ${transaction.note}`}
         </p>
       </div>
-      <p className="font-bold tabular-nums text-sm">
+      <p className={`font-bold tabular-nums text-sm ${isSale ? 'text-blue' : 'text-teal-dark'}`}>
         {isSale ? '+' : '−'}{variant === 'mobile' ? formatNumber(transaction.amount) : formatCompact(Math.abs(transaction.amount), false)}
       </p>
     </div>

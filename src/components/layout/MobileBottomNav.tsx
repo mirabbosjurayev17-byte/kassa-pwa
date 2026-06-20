@@ -48,8 +48,8 @@ export function MobileBottomNav() {
           className="flex flex-col items-center -mt-6 px-3"
           aria-label={tr.home.addNew}
         >
-          <div className="w-14 h-14 rounded-full bg-blue flex items-center justify-center shadow-lg shadow-blue/30">
-            <Plus size={26} strokeWidth={3} className="text-white" />
+          <div className="w-14 h-14 rounded-full bg-teal flex items-center justify-center shadow-lg shadow-teal/40">
+            <Plus size={26} strokeWidth={3} className="text-ink" />
           </div>
         </Link>
 

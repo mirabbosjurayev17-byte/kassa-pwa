@@ -8,17 +8,25 @@ export default {
         sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
       },
       colors: {
-        base: '#F8FAFC',
+        base: '#F0F4FF',
         surface: '#FFFFFF',
-        ink: '#0F172A',
-        mute: '#64748B',
-        border: '#E2E8F0',
-        subtle: '#F1F5F9',
+        ink: '#0A1628',
+        mute: '#6B7FA3',
+        border: '#DDE4F0',
+        subtle: '#EEF2FF',
+        // Primary blue — savdo, CTA, brand
         blue: {
-          DEFAULT: '#1883FF',   // accent — CTA, savdo, brand (Ocean Breeze)
-          light: '#99CAFF',     // badge, subtle highlight
-          dark: '#004EE0',      // emphasis, chart dark bar
-          pale: '#E3F2FF',      // hover bg, tint, card bg
+          DEFAULT: '#2A61EE',
+          dark: '#0350A7',
+          light: '#5B8AF5',
+          pale: '#E8EFFF',
+        },
+        // Teal accent (WOW) — xarajat, FAB highlight
+        teal: {
+          DEFAULT: '#0DC7E0',
+          dark: '#0A9DB5',
+          light: '#47D4E7',
+          pale: '#E0F9FC',
         },
       },
       borderRadius: {

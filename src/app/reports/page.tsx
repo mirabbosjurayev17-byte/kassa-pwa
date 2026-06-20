@@ -229,7 +229,7 @@ export default function ReportsPage() {
                 labelFormatter={l => lang === 'ru' ? `${l} день` : `${l}-kun`}
                 contentStyle={{ borderRadius: 12, border: '1px solid #E2E8F0', fontSize: 13, fontWeight: 600 }}
               />
-              <Line type="monotone" dataKey="foyda" stroke="#1883FF" strokeWidth={2.5} dot={false} activeDot={{ r: 5, fill: '#1883FF' }} />
+              <Line type="monotone" dataKey="foyda" stroke="#0DC7E0" strokeWidth={2.5} dot={false} activeDot={{ r: 5, fill: '#0DC7E0' }} />
             </LineChart>
           </ResponsiveContainer>
         </div>

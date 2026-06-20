@@ -22,16 +22,19 @@ export function DesktopSidebar() {
   ]
 
   return (
-    <aside className="hidden lg:flex w-64 bg-surface border-r border-border flex-col flex-shrink-0 sticky top-0 h-screen">
+    <aside
+      className="hidden lg:flex w-64 flex-col flex-shrink-0 sticky top-0 h-screen"
+      style={{ background: 'linear-gradient(180deg, #0350A7 0%, #0A1F5C 100%)' }}
+    >
       {/* Logo */}
       <div className="px-6 py-8">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-ink flex items-center justify-center flex-shrink-0">
-            <span className="text-blue font-black text-lg leading-none">K</span>
+          <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+            <span className="text-teal font-black text-lg leading-none">K</span>
           </div>
           <div className="min-w-0">
-            <p className="font-black text-lg leading-none">{tr.appName}</p>
-            <p className="text-xs text-mute font-medium mt-1 truncate">
+            <p className="font-black text-lg leading-none text-white">{tr.appName}</p>
+            <p className="text-xs text-white/50 font-medium mt-1 truncate">
               {businessName} · {location}
             </p>
           </div>
@@ -40,7 +43,7 @@ export function DesktopSidebar() {
 
       {/* Til almashtirgich */}
       <div className="px-6 pb-4">
-        <LangSwitch />
+        <LangSwitch variant="light" />
       </div>
 
       {/* Main nav */}
@@ -54,8 +57,8 @@ export function DesktopSidebar() {
               href={item.href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1 transition-colors ${
                 active
-                  ? 'bg-blue text-white'
-                  : 'text-mute hover:bg-subtle'
+                  ? 'bg-white/15 text-white backdrop-blur-sm'
+                  : 'text-white/50 hover:bg-white/10 hover:text-white'
               }`}
             >
               <Icon size={18} strokeWidth={2} />
@@ -73,8 +76,8 @@ export function DesktopSidebar() {
           href="/settings"
           className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
             pathname === '/settings'
-              ? 'bg-blue text-white'
-              : 'text-mute hover:bg-subtle'
+              ? 'bg-white/15 text-white'
+              : 'text-white/50 hover:bg-white/10 hover:text-white'
           }`}
         >
           <Settings size={18} strokeWidth={2} />
