@@ -1,38 +1,68 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState, useMemo, useEffect } from 'react'
+import { Trash2 } from 'lucide-react'
 import { useKassaStore } from '@/store/useKassaStore'
 import { formatNumber } from '@/lib/formatCurrency'
-import { sumByType, daysAgo } from '@/lib/dateUtils'
+import { sumByType, daysAgo, getProfit } from '@/lib/dateUtils'
 import { TransactionItem } from '@/components/home/TransactionItem'
+import { showToast } from '@/lib/toast'
 
 type FilterRange = 'today' | 'week' | 'month'
+
+const RANGE_LABELS: Record<FilterRange, string> = {
+  today: 'Bugun',
+  week: 'Hafta',
+  month: 'Oy',
+}
 
 export default function TransactionsPage() {
   const [mounted, setMounted] = useState(false)
   const transactions = useKassaStore(s => s.transactions)
   const saleCategories = useKassaStore(s => s.saleCategories)
   const expenseCategories = useKassaStore(s => s.expenseCategories)
-  const allCategories = [...saleCategories, ...expenseCategories]
+  const deleteTransaction = useKassaStore(s => s.deleteTransaction)
+  const allCategories = useMemo(
+    () => [...saleCategories, ...expenseCategories],
+    [saleCategories, expenseCategories]
+  )
 
   const [range, setRange] = useState<FilterRange>('week')
+  const [deletingId, setDeletingId] = useState<string | null>(null)
 
   useEffect(() => setMounted(true), [])
 
-  const cutoff = range === 'today' ? daysAgo(0) : range === 'week' ? daysAgo(7) : daysAgo(30)
-  const filtered = transactions.filter(t => new Date(t.date) >= cutoff)
+  const filtered = useMemo(() => {
+    const cutoff =
+      range === 'today' ? daysAgo(0) :
+      range === 'week'  ? daysAgo(7) :
+                          daysAgo(30)
+    return transactions.filter(t => new Date(t.date) >= cutoff)
+  }, [transactions, range])
 
-  const sales = sumByType(filtered, 'sale')
+  const sales    = sumByType(filtered, 'sale')
   const expenses = sumByType(filtered, 'expense')
-  const profit = sales - expenses
+  const profit   = getProfit(filtered)
 
-  // Group by day
-  const groups = filtered.reduce((acc, tx) => {
-    const day = new Date(tx.date).toDateString()
-    if (!acc[day]) acc[day] = []
-    acc[day].push(tx)
-    return acc
-  }, {} as Record<string, typeof transactions>)
+  // Kun bo'yicha group (eng yangi kun tepada)
+  const groups = useMemo(() => {
+    const map: Record<string, typeof transactions> = {}
+    for (const tx of filtered) {
+      const key = new Date(tx.date).toDateString()
+      if (!map[key]) map[key] = []
+      map[key].push(tx)
+    }
+    return Object.entries(map).sort(([a], [b]) => b.localeCompare(a))
+  }, [filtered])
+
+  function handleDelete(id: string) {
+    setDeletingId(id)
+    setTimeout(() => {
+      deleteTransaction(id)
+      setDeletingId(null)
+      showToast('Yozuv o\'chirildi')
+    }, 200)
+  }
 
   if (!mounted) return null
 
@@ -42,67 +72,111 @@ export default function TransactionsPage() {
 
       {/* Filter */}
       <div className="inline-flex items-center gap-1 p-1 bg-subtle rounded-xl mb-6">
-        {(['today', 'week', 'month'] as const).map(r => (
+        {(Object.keys(RANGE_LABELS) as FilterRange[]).map(r => (
           <button
             key={r}
             onClick={() => setRange(r)}
             className={`px-4 py-2 text-sm font-bold rounded-lg transition-colors ${
-              range === r ? 'bg-surface shadow-sm' : 'text-mute'
+              range === r ? 'bg-surface shadow-sm text-ink' : 'text-mute'
             }`}
           >
-            {r === 'today' ? 'Bugun' : r === 'week' ? 'Hafta' : 'Oy'}
+            {RANGE_LABELS[r]}
           </button>
         ))}
       </div>
 
-      {/* Summary card */}
-      <div className="bg-surface rounded-2xl border border-border p-6 mb-6 max-w-2xl">
-        <div className="grid grid-cols-3 gap-6">
+      {/* Summary */}
+      <div className="bg-surface rounded-2xl border border-border p-6 mb-8 max-w-2xl">
+        <div className="grid grid-cols-3 gap-4">
           <div>
-            <p className="text-xs text-mute font-bold uppercase tracking-wide">Savdo</p>
-            <p className="text-2xl font-black tabular-nums mt-2">{formatNumber(sales)}</p>
+            <div className="flex items-center gap-1.5 mb-2">
+              <span className="w-2 h-2 rounded-full bg-blue" />
+              <p className="text-xs text-mute font-bold uppercase tracking-wide">Savdo</p>
+            </div>
+            <p className="text-xl lg:text-2xl font-black tabular-nums">{formatNumber(sales)}</p>
           </div>
           <div>
-            <p className="text-xs text-mute font-bold uppercase tracking-wide">Xarajat</p>
-            <p className="text-2xl font-black tabular-nums mt-2">{formatNumber(expenses)}</p>
+            <div className="flex items-center gap-1.5 mb-2">
+              <span className="w-2 h-2 rounded-full bg-ink" />
+              <p className="text-xs text-mute font-bold uppercase tracking-wide">Xarajat</p>
+            </div>
+            <p className="text-xl lg:text-2xl font-black tabular-nums">{formatNumber(expenses)}</p>
           </div>
           <div>
-            <p className="text-xs text-mute font-bold uppercase tracking-wide">Foyda</p>
-            <p className="text-2xl font-black tabular-nums mt-2 text-blue-dark">{formatNumber(profit)}</p>
+            <div className="flex items-center gap-1.5 mb-2">
+              <span className="w-2 h-2 rounded-full bg-blue-dark" />
+              <p className="text-xs text-mute font-bold uppercase tracking-wide">Foyda</p>
+            </div>
+            <p className="text-xl lg:text-2xl font-black tabular-nums text-blue-dark">
+              {formatNumber(profit)}
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Day groups */}
-      <div className="space-y-6 max-w-3xl">
-        {Object.entries(groups)
-          .sort(([a], [b]) => b.localeCompare(a))
-          .map(([day, txs]) => {
-            const dayDate = new Date(day)
+      {/* Groups */}
+      {groups.length === 0 ? (
+        <div className="text-center py-16">
+          <p className="text-mute font-medium">Bu davrda yozuv yo'q</p>
+        </div>
+      ) : (
+        <div className="space-y-6 max-w-3xl">
+          {groups.map(([day, txs]) => {
+            const dayDate  = new Date(day)
             const dayLabel = dayDate.toLocaleDateString('uz-UZ', {
-              weekday: 'long',
-              day: 'numeric',
-              month: 'long',
+              weekday: 'long', day: 'numeric', month: 'long',
             })
+            const dayProfit = getProfit(txs)
+
             return (
               <div key={day}>
-                <p className="text-xs uppercase tracking-wide text-mute font-bold mb-3">
-                  {dayLabel}
-                </p>
-                <div className="bg-surface rounded-2xl border border-border p-4 space-y-3">
-                  {txs.map(tx => (
-                    <TransactionItem
+                {/* Day header */}
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-xs uppercase tracking-wide text-mute font-bold">
+                    {dayLabel}
+                  </p>
+                  <p className={`text-xs font-bold tabular-nums ${
+                    dayProfit >= 0 ? 'text-blue-dark' : 'text-mute'
+                  }`}>
+                    {dayProfit >= 0 ? '+' : ''}{formatNumber(dayProfit)}
+                  </p>
+                </div>
+
+                {/* Transactions */}
+                <div className="bg-surface rounded-2xl border border-border overflow-hidden">
+                  {txs.map((tx, i) => (
+                    <div
                       key={tx.id}
-                      transaction={tx}
-                      allCategories={allCategories}
-                      variant="desktop"
-                    />
+                      className={`flex items-center gap-3 px-4 py-4 transition-opacity ${
+                        i < txs.length - 1 ? 'border-b border-border' : ''
+                      } ${deletingId === tx.id ? 'opacity-30' : ''}`}
+                    >
+                      <div className="flex-1 min-w-0">
+                        <TransactionItem
+                          transaction={tx}
+                          allCategories={allCategories}
+                          variant="desktop"
+                        />
+                      </div>
+                      <button
+                        onClick={() => handleDelete(tx.id)}
+                        className="w-8 h-8 rounded-lg hover:bg-subtle flex items-center justify-center flex-shrink-0 transition-colors group"
+                        aria-label="O'chirish"
+                      >
+                        <Trash2
+                          size={15}
+                          strokeWidth={2}
+                          className="text-border group-hover:text-mute transition-colors"
+                        />
+                      </button>
+                    </div>
                   ))}
                 </div>
               </div>
             )
           })}
-      </div>
+        </div>
+      )}
     </main>
   )
 }
