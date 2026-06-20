@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { ResponsiveShell } from '@/components/layout/ResponsiveShell'
+import { OnboardingGuard } from '@/components/OnboardingGuard'
+import { ResponsiveShellWrapper } from '@/components/layout/ResponsiveShellWrapper'
 
 export const metadata: Metadata = {
   title: 'Kassa — Kunlik savdo va xarajat trackeri',
-  description: 'Do\'kon, kafe va ustaxonalar uchun PWA',
+  description: "Do'kon, kafe va ustaxonalar uchun kunlik kassa dasturi",
 }
 
 export default function RootLayout({
@@ -22,7 +23,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ResponsiveShell>{children}</ResponsiveShell>
+        <OnboardingGuard>
+          <ResponsiveShellWrapper>{children}</ResponsiveShellWrapper>
+        </OnboardingGuard>
       </body>
     </html>
   )
