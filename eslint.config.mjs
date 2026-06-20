@@ -12,6 +12,12 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
+    rules: {
+      // Uzbek matnda apostrof (so'm, o'tkazma, ...) xom yoziladi.
+      "react/no-unescaped-entities": "off",
+    },
+  },
+  {
     ignores: [
       "node_modules/**",
       ".next/**",
