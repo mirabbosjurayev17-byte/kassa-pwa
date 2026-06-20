@@ -5,9 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Fontshare CDN orqali 'Satoshi' yuklanadi (layout.tsx <head>).
-        // Step 10'da next/font/local'ga o'tganda var(--font-satoshi) ga qaytamiz.
-        sans: ['Satoshi', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
       },
       colors: {
         base: '#F8FAFC',
@@ -24,9 +22,12 @@ export default {
         },
       },
       borderRadius: {
-        lg: '16px',
-        xl: '24px',
-        '2xl': '32px',
+        sm: '6px',
+        md: '8px',
+        lg: '10px',
+        xl: '14px',
+        '2xl': '18px',
+        full: '9999px',
       },
     },
   },

@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useKassaStore } from '@/store/useKassaStore'
+import { useLang } from '@/hooks/useLang'
 import { formatNumber, formatCompact } from '@/lib/formatCurrency'
 import { getProfit, sumByType } from '@/lib/dateUtils'
 import { exportToCsv } from '@/lib/exportCsv'
@@ -12,26 +13,25 @@ import {
 } from 'recharts'
 import { ChevronDown } from 'lucide-react'
 
-// Oy boshini qaytaradi: monthOffset 0 = joriy oy, 1 = o'tgan oy, ...
-function getMonthRange(monthOffset: number): { start: Date; end: Date; label: string } {
+function getMonthRange(monthOffset: number, locale: string): { start: Date; end: Date; label: string } {
   const now = new Date()
   const start = new Date(now.getFullYear(), now.getMonth() - monthOffset, 1)
   const end   = new Date(now.getFullYear(), now.getMonth() - monthOffset + 1, 0, 23, 59, 59, 999)
-  const label = start.toLocaleDateString('uz-UZ', { month: 'long', year: 'numeric' })
+  const label = start.toLocaleDateString(locale, { month: 'long', year: 'numeric' })
   return { start, end, label }
 }
 
-// Oyning necha kuni borligini aniqlaydi
 function getDaysInMonth(start: Date): number {
   return new Date(start.getFullYear(), start.getMonth() + 1, 0).getDate()
 }
 
 export default function ReportsPage() {
   const [mounted, setMounted] = useState(false)
-  const transactions    = useKassaStore(s => s.transactions)
-  const saleCategories  = useKassaStore(s => s.saleCategories)
+  const { tr, lang } = useLang()
+  const transactions = useKassaStore(s => s.transactions)
+  const saleCategories = useKassaStore(s => s.saleCategories)
   const expenseCategories = useKassaStore(s => s.expenseCategories)
-  const allCategories   = useMemo(() => [...saleCategories, ...expenseCategories], [saleCategories, expenseCategories])
+  const allCategories = useMemo(() => [...saleCategories, ...expenseCategories], [saleCategories, expenseCategories])
 
   const [monthOffset, setMonthOffset] = useState(0)
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -39,7 +39,6 @@ export default function ReportsPage() {
 
   useEffect(() => setMounted(true), [])
 
-  // Dropdown'ni tashqariga bosganda yopish
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -50,10 +49,10 @@ export default function ReportsPage() {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
 
-  const monthOptions = [0, 1, 2].map(i => ({ offset: i, ...getMonthRange(i) }))
-  const { start, end, label: monthLabel } = getMonthRange(monthOffset)
+  const locale = lang === 'ru' ? 'ru-RU' : 'uz-UZ'
+  const monthOptions = [0, 1, 2].map(i => ({ offset: i, ...getMonthRange(i, locale) }))
+  const { start, end, label: monthLabel } = getMonthRange(monthOffset, locale)
 
-  // Tanlangan oy tranzaksiyalari
   const monthly = useMemo(
     () => transactions.filter(t => {
       const d = new Date(t.date)
@@ -62,8 +61,7 @@ export default function ReportsPage() {
     [transactions, start, end]
   )
 
-  // O'tgan oy (taqqoslash uchun)
-  const { start: prevStart, end: prevEnd } = getMonthRange(monthOffset + 1)
+  const { start: prevStart, end: prevEnd } = getMonthRange(monthOffset + 1, locale)
   const prevMonthly = useMemo(
     () => transactions.filter(t => {
       const d = new Date(t.date)
@@ -80,7 +78,6 @@ export default function ReportsPage() {
     ? Math.round((monthlyProfit - prevProfit) / prevProfit * 100 * 10) / 10
     : 0
 
-  // Kunlik foyda — line chart uchun
   const daysCount = getDaysInMonth(start)
   const dailyData = useMemo(
     () => Array.from({ length: daysCount }, (_, i) => {
@@ -95,7 +92,6 @@ export default function ReportsPage() {
     [monthly, start, daysCount]
   )
 
-  // Top kategoriyalar
   const topSale = useMemo(
     () => saleCategories
       .map(cat => ({
@@ -122,7 +118,6 @@ export default function ReportsPage() {
     [monthly, expenseCategories, monthlyExpenses]
   )
 
-  // Eng yaxshi kun
   const bestDay = useMemo(
     () => dailyData.reduce(
       (max, d) => d.foyda > max.foyda ? d : max,
@@ -133,7 +128,7 @@ export default function ReportsPage() {
 
   function handleExport() {
     if (monthly.length === 0) {
-      showToast('Bu oyda yozuv yo\'q', 'error')
+      showToast(tr.reports.noEntries, 'error')
       return
     }
     exportToCsv(
@@ -141,7 +136,7 @@ export default function ReportsPage() {
       allCategories,
       `kassa-${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}.csv`
     )
-    showToast(`✓ ${monthly.length} ta yozuv eksport qilindi`)
+    showToast(`✓ ${monthly.length} ${tr.settings.updated.exported}`)
   }
 
   if (!mounted) return null
@@ -151,15 +146,14 @@ export default function ReportsPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-black tracking-tight">Hisobot</h1>
-          <p className="text-sm text-mute mt-1">So'nggi 30 kun tahlili</p>
+          <h1 className="text-3xl font-black tracking-tight">{tr.reports.title}</h1>
+          <p className="text-sm text-mute mt-1">{tr.reports.subtitle}</p>
         </div>
         <div className="flex items-center gap-3 flex-shrink-0">
-          {/* Oy dropdown */}
           <div ref={dropdownRef} className="relative">
             <button
               onClick={() => setDropdownOpen(o => !o)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border bg-surface text-sm font-bold hover:bg-subtle transition-colors"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border bg-surface text-sm font-bold hover:bg-subtle transition-colors capitalize"
             >
               {monthLabel}
               <ChevronDown size={15} strokeWidth={2.5} className={`transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
@@ -170,7 +164,7 @@ export default function ReportsPage() {
                   <button
                     key={opt.offset}
                     onClick={() => { setMonthOffset(opt.offset); setDropdownOpen(false) }}
-                    className={`w-full text-left px-4 py-3 text-sm font-medium hover:bg-subtle transition-colors ${
+                    className={`w-full text-left px-4 py-3 text-sm font-medium hover:bg-subtle transition-colors capitalize ${
                       monthOffset === opt.offset ? 'font-bold text-ink' : 'text-mute'
                     }`}
                   >
@@ -180,19 +174,18 @@ export default function ReportsPage() {
               </div>
             )}
           </div>
-          {/* CSV */}
           <button
             onClick={handleExport}
             className="px-4 py-2.5 rounded-xl border border-border bg-surface text-sm font-bold hover:bg-subtle transition-colors"
           >
-            CSV eksport
+            {tr.reports.export}
           </button>
         </div>
       </div>
 
       {/* Hero profit */}
       <div className="bg-surface rounded-2xl border border-border p-6 lg:p-8 mb-6">
-        <p className="text-xs uppercase tracking-wide text-mute font-bold">Oylik sof foyda</p>
+        <p className="text-xs uppercase tracking-wide text-mute font-bold">{tr.reports.monthlyProfit}</p>
         <div className="flex items-baseline gap-4 mt-3">
           <p className="text-5xl lg:text-6xl font-black tabular-nums tracking-tight">
             {formatNumber(monthlyProfit)}
@@ -201,68 +194,42 @@ export default function ReportsPage() {
         </div>
         {prevProfit > 0 && (
           <p className="text-sm text-mute mt-3">
-            o'tgan oydan {profitChange > 0 ? '+' : ''}{profitChange}%
+            {tr.reports.prevMonth} {profitChange > 0 ? '+' : ''}{profitChange}%
           </p>
         )}
 
-        {/* Oylik stats row */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 mt-6 pt-6 border-t border-border">
           <div>
-            <p className="text-xs text-mute font-medium mb-1">Savdo</p>
+            <p className="text-xs text-mute font-medium mb-1">{tr.home.sales}</p>
             <p className="text-lg font-bold tabular-nums">{formatNumber(monthlySales)}</p>
           </div>
           <div>
-            <p className="text-xs text-mute font-medium mb-1">Xarajat</p>
+            <p className="text-xs text-mute font-medium mb-1">{tr.home.expense}</p>
             <p className="text-lg font-bold tabular-nums">{formatNumber(monthlyExpenses)}</p>
           </div>
           <div>
-            <p className="text-xs text-mute font-medium mb-1">Tranzaksiyalar</p>
-            <p className="text-lg font-bold tabular-nums">{monthly.length} ta</p>
+            <p className="text-xs text-mute font-medium mb-1">{tr.reports.transactions}</p>
+            <p className="text-lg font-bold tabular-nums">{monthly.length}</p>
           </div>
         </div>
       </div>
 
       {/* Line chart */}
       <div className="bg-surface rounded-2xl border border-border p-6 mb-6">
-        <h2 className="text-lg font-bold mb-1">Foyda dinamikasi</h2>
-        <p className="text-xs text-mute mb-6">Har kunlik sof foyda — {monthLabel}</p>
+        <h2 className="text-lg font-bold mb-1">{tr.reports.profitDynamics}</h2>
+        <p className="text-xs text-mute mb-6 capitalize">{tr.reports.dailyProfit} — {monthLabel}</p>
         <div className="h-56 lg:h-72">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={dailyData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
-              <XAxis
-                dataKey="kun"
-                stroke="#64748B"
-                fontSize={11}
-                tickLine={false}
-                axisLine={false}
-              />
-              <YAxis
-                stroke="#64748B"
-                fontSize={11}
-                tickLine={false}
-                axisLine={false}
-                tickFormatter={v => formatCompact(Number(v))}
-                width={52}
-              />
+              <XAxis dataKey="kun" stroke="#64748B" fontSize={11} tickLine={false} axisLine={false} />
+              <YAxis stroke="#64748B" fontSize={11} tickLine={false} axisLine={false} tickFormatter={v => formatCompact(Number(v))} width={52} />
               <Tooltip
-                formatter={(v) => [formatNumber(Number(v)) + " so'm", 'Foyda']}
-                labelFormatter={l => `${l}-kun`}
-                contentStyle={{
-                  borderRadius: 12,
-                  border: '1px solid #E2E8F0',
-                  fontSize: 13,
-                  fontWeight: 600,
-                }}
+                formatter={(v) => [formatNumber(Number(v)) + " so'm", tr.transactions.profit]}
+                labelFormatter={l => lang === 'ru' ? `${l} день` : `${l}-kun`}
+                contentStyle={{ borderRadius: 12, border: '1px solid #E2E8F0', fontSize: 13, fontWeight: 600 }}
               />
-              <Line
-                type="monotone"
-                dataKey="foyda"
-                stroke="#1883FF"
-                strokeWidth={2.5}
-                dot={false}
-                activeDot={{ r: 5, fill: '#1883FF' }}
-              />
+              <Line type="monotone" dataKey="foyda" stroke="#1883FF" strokeWidth={2.5} dot={false} activeDot={{ r: 5, fill: '#1883FF' }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -270,12 +237,11 @@ export default function ReportsPage() {
 
       {/* Top kategoriyalar */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-        {/* Savdo */}
         <div className="bg-surface rounded-2xl border border-border p-6">
-          <h2 className="text-base font-bold mb-1">Top savdo kategoriyalari</h2>
-          <p className="text-xs text-mute mb-5">{monthLabel}</p>
+          <h2 className="text-base font-bold mb-1">{tr.reports.topSale}</h2>
+          <p className="text-xs text-mute mb-5 capitalize">{monthLabel}</p>
           {topSale.length === 0 ? (
-            <p className="text-sm text-mute">Bu oyda savdo yo'q</p>
+            <p className="text-sm text-mute">{tr.reports.noSales}</p>
           ) : (
             <div className="space-y-4">
               {topSale.map(c => (
@@ -294,12 +260,11 @@ export default function ReportsPage() {
           )}
         </div>
 
-        {/* Xarajat */}
         <div className="bg-surface rounded-2xl border border-border p-6">
-          <h2 className="text-base font-bold mb-1">Top xarajat kategoriyalari</h2>
-          <p className="text-xs text-mute mb-5">{monthLabel}</p>
+          <h2 className="text-base font-bold mb-1">{tr.reports.topExpense}</h2>
+          <p className="text-xs text-mute mb-5 capitalize">{monthLabel}</p>
           {topExpense.length === 0 ? (
-            <p className="text-sm text-mute">Bu oyda xarajat yo'q</p>
+            <p className="text-sm text-mute">{tr.reports.noExpenses}</p>
           ) : (
             <div className="space-y-4">
               {topExpense.map(c => (
@@ -322,15 +287,14 @@ export default function ReportsPage() {
       {/* Eng yaxshi kun */}
       {bestDay.foyda > 0 && (
         <div className="bg-surface rounded-2xl border border-border p-6">
-          <p className="text-xs uppercase tracking-wide text-mute font-bold mb-3">Eng yaxshi kun</p>
-          <p className="text-base font-bold">
-            {new Date(start.getFullYear(), start.getMonth(), bestDay.kun).toLocaleDateString('uz-UZ', {
+          <p className="text-xs uppercase tracking-wide text-mute font-bold">{tr.reports.bestDay}</p>
+          <p className="text-base font-bold mt-2 capitalize">
+            {new Date(start.getFullYear(), start.getMonth(), bestDay.kun).toLocaleDateString(locale, {
               weekday: 'long', day: 'numeric', month: 'long',
             })}
           </p>
-          <p className="text-3xl font-black tabular-nums mt-2">
-            +{formatNumber(bestDay.foyda)}{' '}
-            <span className="text-base text-mute font-bold">so'm</span>
+          <p className="text-3xl font-black tabular-nums text-blue-dark mt-2">
+            +{formatNumber(bestDay.foyda)} <span className="text-base text-mute font-bold">so'm</span>
           </p>
         </div>
       )}

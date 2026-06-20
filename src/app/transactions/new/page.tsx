@@ -5,11 +5,13 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { useKassaStore } from '@/store/useKassaStore'
+import { useLang } from '@/hooks/useLang'
 import { formatNumber } from '@/lib/formatCurrency'
 import { showToast } from '@/lib/toast'
 
 export default function NewTransactionPage() {
   const router = useRouter()
+  const { tr } = useLang()
   const saleCategories = useKassaStore(s => s.saleCategories)
   const expenseCategories = useKassaStore(s => s.expenseCategories)
   const addTransaction = useKassaStore(s => s.addTransaction)
@@ -38,11 +40,11 @@ export default function NewTransactionPage() {
 
   async function handleSubmit() {
     if (amount <= 0) {
-      showToast('Summani kiriting', 'error')
+      showToast(tr.newTx.enterAmount, 'error')
       return
     }
     if (!category) {
-      showToast('Kategoriyani tanlang', 'error')
+      showToast(tr.newTx.selectCategory, 'error')
       return
     }
 
@@ -56,16 +58,14 @@ export default function NewTransactionPage() {
       date: new Date().toISOString(),
     })
 
-    showToast(type === 'sale' ? "✓ Savdo qo'shildi" : "✓ Xarajat qo'shildi")
+    showToast(type === 'sale' ? tr.newTx.saved_sale : tr.newTx.saved_expense)
 
-    // Qisqa kutish — toast ko'rinsin
     await new Promise(r => setTimeout(r, 300))
     router.push('/')
   }
 
   return (
     <main className="px-5 lg:px-10 py-8 max-w-2xl">
-      {/* Header */}
       <div className="flex items-center gap-3 mb-8">
         <Link
           href="/"
@@ -73,13 +73,13 @@ export default function NewTransactionPage() {
         >
           <ArrowLeft size={18} strokeWidth={2} />
         </Link>
-        <h1 className="text-3xl font-black tracking-tight">Yangi yozuv</h1>
+        <h1 className="text-3xl font-black tracking-tight">{tr.newTx.title}</h1>
       </div>
 
       <div className="space-y-6">
         {/* Type toggle */}
         <div>
-          <p className="text-xs uppercase tracking-wide text-mute font-bold mb-2">Turi</p>
+          <p className="text-xs uppercase tracking-wide text-mute font-bold mb-2">{tr.newTx.type}</p>
           <div className="grid grid-cols-2 gap-2 p-1 bg-subtle rounded-xl">
             <button
               onClick={() => handleTypeChange('sale')}
@@ -87,7 +87,7 @@ export default function NewTransactionPage() {
                 type === 'sale' ? 'bg-blue text-white' : 'text-mute'
               }`}
             >
-              Savdo
+              {tr.newTx.sale}
             </button>
             <button
               onClick={() => handleTypeChange('expense')}
@@ -95,14 +95,14 @@ export default function NewTransactionPage() {
                 type === 'expense' ? 'bg-ink text-white' : 'text-mute'
               }`}
             >
-              Xarajat
+              {tr.newTx.expense}
             </button>
           </div>
         </div>
 
         {/* Amount */}
         <div>
-          <p className="text-xs uppercase tracking-wide text-mute font-bold mb-2">Summa</p>
+          <p className="text-xs uppercase tracking-wide text-mute font-bold mb-2">{tr.newTx.amount}</p>
           <div className="bg-surface rounded-2xl border border-border p-6">
             <input
               type="number"
@@ -116,7 +116,6 @@ export default function NewTransactionPage() {
               {amount > 0 ? formatNumber(amount) + " so'm" : "so'm"}
             </p>
           </div>
-          {/* Quick chips */}
           <div className="flex items-center gap-2 mt-3 overflow-x-auto pb-1">
             {[10_000, 50_000, 100_000, 500_000, 1_000_000].map(v => (
               <button
@@ -132,7 +131,7 @@ export default function NewTransactionPage() {
                 onClick={() => setAmount(0)}
                 className="px-3 py-1.5 text-xs font-bold bg-surface border border-border rounded-lg flex-shrink-0 text-mute hover:bg-subtle transition-colors"
               >
-                O'chirish
+                {tr.newTx.clear}
               </button>
             )}
           </div>
@@ -140,7 +139,7 @@ export default function NewTransactionPage() {
 
         {/* Category */}
         <div>
-          <p className="text-xs uppercase tracking-wide text-mute font-bold mb-2">Kategoriya</p>
+          <p className="text-xs uppercase tracking-wide text-mute font-bold mb-2">{tr.newTx.category}</p>
           <div className="flex flex-wrap gap-2">
             {categories.map(c => (
               <button
@@ -161,12 +160,12 @@ export default function NewTransactionPage() {
         {/* Note */}
         <div>
           <p className="text-xs uppercase tracking-wide text-mute font-bold mb-2">
-            Izoh <span className="text-mute font-medium normal-case tracking-normal">(ixtiyoriy)</span>
+            {tr.newTx.note} <span className="text-mute font-medium normal-case tracking-normal">{tr.newTx.noteOptional}</span>
           </p>
           <textarea
             value={note}
             onChange={e => setNote(e.target.value)}
-            placeholder="Masalan: Toshkent ulgurji bozoridan"
+            placeholder={tr.newTx.notePlaceholder}
             rows={3}
             className="w-full bg-surface border border-border rounded-xl p-4 text-sm outline-none focus:border-blue transition-colors resize-none"
           />
@@ -176,9 +175,9 @@ export default function NewTransactionPage() {
         <button
           onClick={handleSubmit}
           disabled={amount <= 0 || isSubmitting}
-          className="w-full bg-ink text-white rounded-xl py-4 font-bold text-base disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
+          className="w-full bg-blue text-white rounded-xl py-4 font-bold text-base disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
         >
-          {isSubmitting ? 'Saqlanmoqda...' : 'Saqlash'}
+          {isSubmitting ? tr.newTx.saving : tr.newTx.save}
         </button>
       </div>
     </main>

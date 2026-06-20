@@ -16,6 +16,7 @@ export type Settings = {
   location: string
   currency: Currency
   onboardingCompleted: boolean
+  lang: 'uz' | 'ru'
 }
 
 export type Category = {

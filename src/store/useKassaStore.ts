@@ -25,6 +25,7 @@ const DEFAULT_SETTINGS: Settings = {
   location: 'Sergeli',
   currency: 'UZS',
   onboardingCompleted: false,
+  lang: 'uz',
 }
 
 function genId(): string {

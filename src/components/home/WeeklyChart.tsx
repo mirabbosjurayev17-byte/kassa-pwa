@@ -1,9 +1,11 @@
 'use client'
 
 import { useKassaStore } from '@/store/useKassaStore'
-import { filterByDay, sumByType, daysAgo, getDayLabel, isSameDay } from '@/lib/dateUtils'
+import { filterByDay, sumByType, daysAgo, isSameDay } from '@/lib/dateUtils'
+import { useLang } from '@/hooks/useLang'
 
 export function WeeklyChart() {
+  const { tr } = useLang()
   const transactions = useKassaStore(s => s.transactions)
   const today = new Date()
 
@@ -28,8 +30,8 @@ export function WeeklyChart() {
     <div className="bg-surface rounded-2xl border border-border p-5 lg:p-6">
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h2 className="text-base lg:text-lg font-bold">Savdo va xarajat</h2>
-          <p className="text-xs text-mute mt-1">So'nggi 7 kun</p>
+          <h2 className="text-base lg:text-lg font-bold">{tr.home.sales} / {tr.home.expense}</h2>
+          <p className="text-xs text-mute mt-1">{tr.home.thisWeek}</p>
         </div>
       </div>
 
@@ -47,7 +49,7 @@ export function WeeklyChart() {
                     d.isToday ? 'bg-blue' : 'bg-blue-dark/30'
                   }`}
                   style={{ height: `${Math.max(salesPct, 2)}%` }}
-                  aria-label={`Savdo: ${d.sales}`}
+                  aria-label={`${tr.home.sales}: ${d.sales}`}
                 />
                 {d.expenses > 0 && (
                   <div
@@ -55,14 +57,14 @@ export function WeeklyChart() {
                       d.isToday ? 'bg-ink/70' : 'bg-ink/20'
                     }`}
                     style={{ height: `${Math.max(expPct, 2)}%` }}
-                    aria-label={`Xarajat: ${d.expenses}`}
+                    aria-label={`${tr.home.expense}: ${d.expenses}`}
                   />
                 )}
               </div>
               <p className={`text-xs ${
                 d.isToday ? 'font-bold text-ink' : 'text-mute font-medium'
               }`}>
-                {d.isToday ? 'Bugun' : getDayLabel(d.day)}
+                {d.isToday ? tr.home.today : tr.home.dayLabels[d.day.getDay()]}
               </p>
             </div>
           )
@@ -73,11 +75,11 @@ export function WeeklyChart() {
       <div className="flex items-center gap-4 lg:gap-6 mt-5 pt-4 border-t border-border">
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded bg-blue" />
-          <span className="text-xs text-mute font-medium">Savdo</span>
+          <span className="text-xs text-mute font-medium">{tr.home.sales}</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded bg-ink/70" />
-          <span className="text-xs text-mute font-medium">Xarajat</span>
+          <span className="text-xs text-mute font-medium">{tr.home.expense}</span>
         </div>
       </div>
     </div>

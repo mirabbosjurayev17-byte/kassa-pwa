@@ -4,19 +4,22 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Home, BarChart3, ListOrdered, FolderTree, Users, Settings } from 'lucide-react'
 import { useKassaStore } from '@/store/useKassaStore'
-
-const MAIN_ITEMS = [
-  { href: '/', label: 'Bosh sahifa', icon: Home },
-  { href: '/reports', label: 'Hisobotlar', icon: BarChart3 },
-  { href: '/transactions', label: 'Yozuvlar', icon: ListOrdered },
-  { href: '/categories', label: 'Kategoriyalar', icon: FolderTree },
-  { href: '/staff', label: 'Xodimlar', icon: Users },
-]
+import { useLang } from '@/hooks/useLang'
+import { LangSwitch } from './LangSwitch'
 
 export function DesktopSidebar() {
   const pathname = usePathname()
+  const { tr } = useLang()
   const businessName = useKassaStore((s) => s.settings.businessName)
   const location = useKassaStore((s) => s.settings.location)
+
+  const MAIN_ITEMS = [
+    { href: '/', label: tr.nav.home, icon: Home },
+    { href: '/reports', label: tr.nav.reports, icon: BarChart3 },
+    { href: '/transactions', label: tr.nav.transactions, icon: ListOrdered },
+    { href: '/categories', label: tr.nav.categories, icon: FolderTree },
+    { href: '/staff', label: tr.nav.staff, icon: Users },
+  ]
 
   return (
     <aside className="hidden lg:flex w-64 bg-surface border-r border-border flex-col flex-shrink-0 sticky top-0 h-screen">
@@ -27,12 +30,17 @@ export function DesktopSidebar() {
             <span className="text-blue font-black text-lg leading-none">K</span>
           </div>
           <div className="min-w-0">
-            <p className="font-black text-lg leading-none">Kassa</p>
+            <p className="font-black text-lg leading-none">{tr.appName}</p>
             <p className="text-xs text-mute font-medium mt-1 truncate">
               {businessName} · {location}
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Til almashtirgich */}
+      <div className="px-6 pb-4">
+        <LangSwitch />
       </div>
 
       {/* Main nav */}
@@ -46,7 +54,7 @@ export function DesktopSidebar() {
               href={item.href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1 transition-colors ${
                 active
-                  ? 'bg-ink text-white'
+                  ? 'bg-blue text-white'
                   : 'text-mute hover:bg-subtle'
               }`}
             >
@@ -65,12 +73,12 @@ export function DesktopSidebar() {
           href="/settings"
           className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
             pathname === '/settings'
-              ? 'bg-ink text-white'
+              ? 'bg-blue text-white'
               : 'text-mute hover:bg-subtle'
           }`}
         >
           <Settings size={18} strokeWidth={2} />
-          <span className="text-sm font-medium">Sozlamalar</span>
+          <span className="text-sm font-medium">{tr.nav.settings}</span>
         </Link>
       </div>
     </aside>

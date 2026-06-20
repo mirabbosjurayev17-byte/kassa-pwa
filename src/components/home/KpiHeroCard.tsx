@@ -3,8 +3,10 @@
 import { useKassaStore } from '@/store/useKassaStore'
 import { formatNumber } from '@/lib/formatCurrency'
 import { filterByDay, sumByType, getProfit, daysAgo } from '@/lib/dateUtils'
+import { useLang } from '@/hooks/useLang'
 
 export function KpiHeroCard() {
+  const { tr } = useLang()
   const transactions = useKassaStore(s => s.transactions)
 
   const today = new Date()
@@ -30,7 +32,7 @@ export function KpiHeroCard() {
       {/* Eyebrow + delta */}
       <div className="flex items-center justify-between">
         <p className="text-xs uppercase tracking-wide text-mute font-bold">
-          Bugungi sof foyda
+          {tr.home.todayProfit}
         </p>
         {yesterdayProfit > 0 && (
           // Neytral pill — yo'nalish faqat ↑/↓ orqali. Ko'k = "savdo", "yuqori" emas.
@@ -40,14 +42,14 @@ export function KpiHeroCard() {
         )}
       </div>
 
-      {/* SIGNATURE RAQAM — fluid clamp (320px..mobil), desktop'da text-7xl (hero full-width) */}
+      {/* SIGNATURE RAQAM — fluid clamp (320px..mobil), desktop'da clamp (hero full-width) */}
       <p className="text-[clamp(2.25rem,9vw,3rem)] lg:text-[clamp(3rem,4.2vw,4.5rem)] font-black tabular-nums text-ink tracking-tight leading-none mt-4">
         {formatNumber(todayProfit)}
       </p>
       <p className="text-sm text-mute font-medium mt-2">
         so'm{' '}
         {yesterdayProfit > 0 && (
-          <span>· kechagiga {isUp ? '+' : '−'}{formatNumber(Math.abs(delta))}</span>
+          <span>· {tr.home.yesterday} {isUp ? '+' : '−'}{formatNumber(Math.abs(delta))}</span>
         )}
       </p>
 
@@ -56,7 +58,7 @@ export function KpiHeroCard() {
         <div>
           <div className="flex items-center gap-1.5 mb-1">
             <span className="w-2 h-2 rounded-full bg-blue" />
-            <p className="text-xs text-mute font-medium">Savdo</p>
+            <p className="text-xs text-mute font-medium">{tr.home.sales}</p>
           </div>
           <p className="text-lg font-bold tabular-nums">
             {formatNumber(todaySales)}
@@ -65,7 +67,7 @@ export function KpiHeroCard() {
         <div>
           <div className="flex items-center gap-1.5 mb-1">
             <span className="w-2 h-2 rounded-full bg-ink" />
-            <p className="text-xs text-mute font-medium">Xarajat</p>
+            <p className="text-xs text-mute font-medium">{tr.home.expense}</p>
           </div>
           <p className="text-lg font-bold tabular-nums">
             {formatNumber(todayExpenses)}
