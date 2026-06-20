@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Home, BarChart3, ListOrdered, FolderTree, Users, Settings, Sparkles } from 'lucide-react'
 import { useLang } from '@/hooks/useLang'
-import { LangSwitch } from './LangSwitch'
 
 type NavItem = { href: string; label: string; icon: typeof Home }
 
@@ -82,9 +81,6 @@ export function DesktopSidebar() {
               ? "Bugungi xarajat kechagiga nisbatan 23% yuqori."
               : "Сегодняшние расходы на 23% выше вчерашних."}
           </p>
-        </div>
-        <div className="mt-3">
-          <LangSwitch />
         </div>
       </div>
     </aside>

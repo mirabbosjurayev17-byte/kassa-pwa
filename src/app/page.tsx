@@ -13,11 +13,15 @@ import { showToast } from '@/lib/toast'
 import { WeeklyChart } from '@/components/home/WeeklyChart'
 import { TransactionItem } from '@/components/home/TransactionItem'
 import { LangSwitch } from '@/components/layout/LangSwitch'
+import { SearchModal } from '@/components/SearchModal'
+import { NotifPanel } from '@/components/NotifPanel'
 
 const DONUT_COLORS = ['#0F1A0F', '#2DB550', '#5DC877', '#A8D5B5', '#DCE5DC']
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [notifOpen, setNotifOpen] = useState(false)
   const { tr, lang } = useLang()
 
   const transactions = useKassaStore(s => s.transactions)
@@ -122,12 +126,23 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-3">
             <LangSwitch />
-            <button className="w-9 h-9 rounded-xl bg-surface border border-border flex items-center justify-center hover:bg-subtle transition-colors" aria-label="Search">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="w-9 h-9 rounded-xl bg-surface border border-border flex items-center justify-center hover:bg-subtle transition-colors"
+              aria-label="Search"
+            >
               <Search size={16} className="text-mute" />
             </button>
-            <button className="w-9 h-9 rounded-xl bg-surface border border-border flex items-center justify-center hover:bg-subtle transition-colors" aria-label="Notifications">
-              <Bell size={16} className="text-mute" />
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => setNotifOpen(o => !o)}
+                className="w-9 h-9 rounded-xl bg-surface border border-border flex items-center justify-center hover:bg-subtle transition-colors"
+                aria-label="Notifications"
+              >
+                <Bell size={16} className="text-mute" />
+              </button>
+              {notifOpen && <NotifPanel onClose={() => setNotifOpen(false)} />}
+            </div>
           </div>
         </div>
 
@@ -296,9 +311,16 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-2">
               <LangSwitch />
-              <button className="w-9 h-9 rounded-xl bg-surface border border-border flex items-center justify-center" aria-label="Notifications">
-                <Bell size={16} className="text-mute" />
-              </button>
+              <div className="relative">
+                <button
+                  onClick={() => setNotifOpen(o => !o)}
+                  className="w-9 h-9 rounded-xl bg-surface border border-border flex items-center justify-center"
+                  aria-label="Notifications"
+                >
+                  <Bell size={16} className="text-mute" />
+                </button>
+                {notifOpen && <NotifPanel onClose={() => setNotifOpen(false)} />}
+              </div>
             </div>
           </div>
         </div>
@@ -378,6 +400,8 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
     </>
   )
 }
