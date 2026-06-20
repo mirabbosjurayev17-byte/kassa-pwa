@@ -68,9 +68,10 @@ export const useKassaStore = create<KassaState>()(
         })),
 
       resetAll: () =>
+        // Settings (biznes nomi, onboardingCompleted) saqlanadi — "barchasini o'chirish"
+        // faqat yozuvlar va kategoriyalarni default'ga qaytaradi (onboarding'ga otib yubormaydi).
         set({
           transactions: [],
-          settings: DEFAULT_SETTINGS,
           saleCategories: DEFAULT_SALE_CATEGORIES,
           expenseCategories: DEFAULT_EXPENSE_CATEGORIES,
         }),
