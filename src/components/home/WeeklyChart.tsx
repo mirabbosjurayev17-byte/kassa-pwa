@@ -31,13 +31,13 @@ export function WeeklyChart() {
           <div key={i} className="flex-1 flex flex-col items-center gap-2">
             <div className="w-full flex flex-col items-center gap-1 h-full justify-end overflow-hidden">
               <div
-                className={`w-full rounded-md transition-all ${d.isToday ? 'bg-blue' : 'bg-blue/30'}`}
+                className={`w-full rounded-sm transition-all ${d.isToday ? 'bg-dark' : 'bg-dark/20'}`}
                 style={{ height: `${Math.max(salesPct, 2)}%` }}
                 aria-label={`${tr.home.sales}: ${d.sales}`}
               />
               {d.expenses > 0 && (
                 <div
-                  className={`w-full rounded-md ${d.isToday ? 'bg-teal' : 'bg-teal/30'}`}
+                  className={`w-full rounded-sm ${d.isToday ? 'bg-green' : 'bg-green/25'}`}
                   style={{ height: `${Math.max(expPct, 2)}%` }}
                   aria-label={`${tr.home.expense}: ${d.expenses}`}
                 />

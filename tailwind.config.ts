@@ -5,37 +5,45 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
       },
       colors: {
-        base: '#F0F4FF',
+        base: '#E8EEE8',     // sage green background
         surface: '#FFFFFF',
-        ink: '#0A1628',
-        mute: '#6B7FA3',
-        border: '#DDE4F0',
-        subtle: '#EEF2FF',
-        // Primary blue — savdo, CTA, brand
-        blue: {
-          DEFAULT: '#2A61EE',
-          dark: '#0350A7',
-          light: '#5B8AF5',
-          pale: '#E8EFFF',
+        ink: '#0F1A0F',      // near-black (dark green tint)
+        mute: '#6B7B6B',
+        border: '#DCE5DC',
+        subtle: '#F2F5F2',
+
+        // Dark card (hero)
+        dark: {
+          DEFAULT: '#141F14',
+          card: '#1A2B1A',
         },
-        // Teal accent (WOW) — xarajat, FAB highlight
-        teal: {
-          DEFAULT: '#0DC7E0',
-          dark: '#0A9DB5',
-          light: '#47D4E7',
-          pale: '#E0F9FC',
+
+        // Green accent
+        green: {
+          DEFAULT: '#2DB550',
+          dark: '#1E8A3A',
+          light: '#5DC877',
+          pale: '#E6F5EB',
         },
+
+        // Semantic
+        positive: '#2DB550',
+        negative: '#E53935',
       },
       borderRadius: {
-        sm: '6px',
-        md: '8px',
-        lg: '10px',
-        xl: '14px',
-        '2xl': '18px',
+        sm: '8px',
+        md: '12px',
+        lg: '16px',
+        xl: '20px',
+        '2xl': '24px',
         full: '9999px',
+      },
+      boxShadow: {
+        card: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)',
+        'card-hover': '0 4px 12px rgba(0,0,0,0.10)',
       },
     },
   },

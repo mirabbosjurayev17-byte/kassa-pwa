@@ -27,10 +27,10 @@ export function MobileBottomNav() {
       >
         <Icon
           size={22}
-          strokeWidth={active ? 2.5 : 2}
-          className={active ? 'text-blue' : 'text-mute'}
+          strokeWidth={active ? 2.2 : 1.8}
+          className={active ? 'text-green' : 'text-mute'}
         />
-        <span className={`text-xs whitespace-nowrap ${active ? 'font-bold text-blue' : 'font-medium text-mute'}`}>
+        <span className={`text-xs whitespace-nowrap ${active ? 'font-semibold text-green' : 'font-medium text-mute'}`}>
           {tr.nav[item.key]}
         </span>
       </Link>
@@ -38,18 +38,18 @@ export function MobileBottomNav() {
   }
 
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-border z-40">
+    <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-sm border-t border-border z-40">
       <div className="flex items-center justify-around px-2 pt-2 pb-6 max-w-md mx-auto">
         {ITEMS.slice(0, 2).map(renderItem)}
 
-        {/* O'rta + tugma — floating */}
+        {/* O'rta + tugma — dark FAB */}
         <Link
           href="/transactions/new"
           className="flex flex-col items-center -mt-6 px-3"
           aria-label={tr.home.addNew}
         >
-          <div className="w-14 h-14 rounded-full bg-teal flex items-center justify-center shadow-lg shadow-teal/40">
-            <Plus size={26} strokeWidth={3} className="text-ink" />
+          <div className="w-14 h-14 rounded-full bg-dark flex items-center justify-center shadow-lg shadow-dark/30">
+            <Plus size={26} strokeWidth={2.5} className="text-white" />
           </div>
         </Link>
 

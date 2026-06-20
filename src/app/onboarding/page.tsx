@@ -49,7 +49,7 @@ export default function OnboardingPage() {
         {/* Logo */}
         <div className="flex items-center gap-2 mb-12">
           <div className="w-9 h-9 rounded-lg bg-ink flex items-center justify-center">
-            <span className="text-blue font-black text-lg leading-none">K</span>
+            <span className="text-green font-black text-lg leading-none">K</span>
           </div>
           <span className="font-black text-xl">{tr.appName}</span>
         </div>
@@ -64,7 +64,7 @@ export default function OnboardingPage() {
               <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-border">
                 <div>
                   <div className="flex items-center gap-1.5 mb-1">
-                    <span className="w-2 h-2 rounded-full bg-blue" />
+                    <span className="w-2 h-2 rounded-full bg-green" />
                     <p className="text-xs text-mute font-medium">{tr.home.sales}</p>
                   </div>
                   <p className="text-base font-bold tabular-nums">{formatNumber(4_070_000)}</p>
@@ -83,7 +83,7 @@ export default function OnboardingPage() {
             <h1 className="text-3xl font-black tracking-tight mb-3">{o.slide0.headline}</h1>
             <p className="text-mute font-medium mb-10">{o.slide0.body}</p>
 
-            <button onClick={next} className="w-full bg-blue text-white rounded-xl py-4 font-bold text-base">
+            <button onClick={next} className="w-full bg-green text-white rounded-xl py-4 font-bold text-base">
               {o.slide0.cta}
             </button>
           </div>
@@ -95,7 +95,7 @@ export default function OnboardingPage() {
             <div className="space-y-3 mb-8">
               {o.slide1.steps.map((text, i) => (
                 <div key={i} className="flex items-center gap-4 bg-surface border border-border rounded-xl px-5 py-4">
-                  <span className="w-8 h-8 rounded-full bg-blue text-white font-black text-sm flex items-center justify-center flex-shrink-0">
+                  <span className="w-8 h-8 rounded-full bg-green text-white font-black text-sm flex items-center justify-center flex-shrink-0">
                     {i + 1}
                   </span>
                   <p className="text-sm font-medium">{text}</p>
@@ -107,7 +107,7 @@ export default function OnboardingPage() {
             <h1 className="text-3xl font-black tracking-tight mb-3">{o.slide1.headline}</h1>
             <p className="text-mute font-medium mb-10">{o.slide1.body}</p>
 
-            <button onClick={next} className="w-full bg-blue text-white rounded-xl py-4 font-bold text-base">
+            <button onClick={next} className="w-full bg-green text-white rounded-xl py-4 font-bold text-base">
               {o.slide1.cta}
             </button>
           </div>
@@ -123,7 +123,7 @@ export default function OnboardingPage() {
             <div className="space-y-5">
               <div>
                 <label className="text-xs uppercase tracking-wide text-mute font-bold block mb-2">
-                  {tr.settings.name} <span className="text-blue">*</span>
+                  {tr.settings.name} <span className="text-green">*</span>
                 </label>
                 <input
                   type="text"
@@ -131,7 +131,7 @@ export default function OnboardingPage() {
                   onChange={e => { setBusinessName(e.target.value); setError('') }}
                   placeholder={o.slide2.namePlaceholder}
                   className={`w-full bg-surface border rounded-xl px-4 py-3.5 text-sm font-medium outline-none transition-colors ${
-                    error ? 'border-ink' : 'border-border focus:border-blue'
+                    error ? 'border-ink' : 'border-border focus:border-green'
                   }`}
                   autoFocus
                 />
@@ -147,7 +147,7 @@ export default function OnboardingPage() {
                   value={location}
                   onChange={e => setLocation(e.target.value)}
                   placeholder={o.slide2.locationPlaceholder}
-                  className="w-full bg-surface border border-border rounded-xl px-4 py-3.5 text-sm font-medium outline-none focus:border-blue transition-colors"
+                  className="w-full bg-surface border border-border rounded-xl px-4 py-3.5 text-sm font-medium outline-none focus:border-green transition-colors"
                 />
               </div>
 
@@ -174,7 +174,7 @@ export default function OnboardingPage() {
               </div>
             </div>
 
-            <button onClick={handleFinish} className="w-full bg-blue text-white rounded-xl py-4 font-bold text-base mt-8">
+            <button onClick={handleFinish} className="w-full bg-green text-white rounded-xl py-4 font-bold text-base mt-8">
               {o.slide2.cta}
             </button>
           </div>

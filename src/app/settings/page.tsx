@@ -42,13 +42,13 @@ function EditModal({
           placeholder={placeholder}
           autoFocus
           onKeyDown={e => e.key === 'Enter' && handleSave()}
-          className="w-full bg-base border border-border rounded-xl px-4 py-3 text-sm font-medium outline-none focus:border-blue transition-colors mb-4"
+          className="w-full bg-base border border-border rounded-xl px-4 py-3 text-sm font-medium outline-none focus:border-green transition-colors mb-4"
         />
         <div className="grid grid-cols-2 gap-3">
           <button onClick={onClose} className="py-3 rounded-xl border border-border text-sm font-bold hover:bg-subtle transition-colors">
             {tr.settings.cancel}
           </button>
-          <button onClick={handleSave} disabled={!val.trim()} className="py-3 rounded-xl bg-blue text-white text-sm font-bold disabled:opacity-30">
+          <button onClick={handleSave} disabled={!val.trim()} className="py-3 rounded-xl bg-green text-white text-sm font-bold disabled:opacity-30">
             {tr.settings.save}
           </button>
         </div>
@@ -151,7 +151,7 @@ function CategoryManager({ type, onClose }: { type: 'sale' | 'expense'; onClose:
           {categories.map(c => (
             <div key={c.id} className="flex items-center justify-between px-4 py-3 bg-base rounded-xl">
               <div className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full ${type === 'sale' ? 'bg-blue' : 'bg-ink'}`} />
+                <span className={`w-2 h-2 rounded-full ${type === 'sale' ? 'bg-green' : 'bg-ink'}`} />
                 <span className="text-sm font-medium">{c.label}</span>
               </div>
               <button onClick={() => handleRemove(c.id)} className="w-7 h-7 rounded-lg hover:bg-border flex items-center justify-center transition-colors">
@@ -168,9 +168,9 @@ function CategoryManager({ type, onClose }: { type: 'sale' | 'expense'; onClose:
             onChange={e => setNewLabel(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleAdd()}
             placeholder={tr.settings.addCategory}
-            className="flex-1 bg-base border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue transition-colors"
+            className="flex-1 bg-base border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-green transition-colors"
           />
-          <button onClick={handleAdd} disabled={!newLabel.trim()} className="w-10 h-10 rounded-xl bg-blue text-white flex items-center justify-center disabled:opacity-30">
+          <button onClick={handleAdd} disabled={!newLabel.trim()} className="w-10 h-10 rounded-xl bg-green text-white flex items-center justify-center disabled:opacity-30">
             <Plus size={18} strokeWidth={2.5} />
           </button>
         </div>

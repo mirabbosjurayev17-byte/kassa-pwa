@@ -92,7 +92,7 @@ export default function TransactionsPage() {
         <div className="grid grid-cols-3 gap-4">
           <div>
             <div className="flex items-center gap-1.5 mb-2">
-              <span className="w-2 h-2 rounded-full bg-blue" />
+              <span className="w-2 h-2 rounded-full bg-green" />
               <p className="text-xs text-mute font-bold uppercase tracking-wide">{tr.home.sales}</p>
             </div>
             <p className="text-xl lg:text-2xl font-black tabular-nums">{formatNumber(sales)}</p>
@@ -106,10 +106,10 @@ export default function TransactionsPage() {
           </div>
           <div>
             <div className="flex items-center gap-1.5 mb-2">
-              <span className="w-2 h-2 rounded-full bg-blue-dark" />
+              <span className="w-2 h-2 rounded-full bg-green-dark" />
               <p className="text-xs text-mute font-bold uppercase tracking-wide">{tr.transactions.profit}</p>
             </div>
-            <p className="text-xl lg:text-2xl font-black tabular-nums text-blue-dark">
+            <p className="text-xl lg:text-2xl font-black tabular-nums text-green-dark">
               {formatNumber(profit)}
             </p>
           </div>
@@ -134,7 +134,7 @@ export default function TransactionsPage() {
                 <div className="flex items-center justify-between mb-3">
                   <p className="text-xs uppercase tracking-wide text-mute font-bold">{dayLabel}</p>
                   <p className={`text-xs font-bold tabular-nums ${
-                    dayProfit >= 0 ? 'text-blue-dark' : 'text-mute'
+                    dayProfit >= 0 ? 'text-green-dark' : 'text-mute'
                   }`}>
                     {dayProfit >= 0 ? '+' : ''}{formatNumber(dayProfit)}
                   </p>

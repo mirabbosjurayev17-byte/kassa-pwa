@@ -18,7 +18,7 @@ export default function CategoriesPage() {
           <div className="bg-surface border border-border rounded-2xl overflow-hidden">
             {saleCategories.map((c, i) => (
               <div key={c.id} className={`px-5 py-4 flex items-center gap-3 ${i < saleCategories.length - 1 ? 'border-b border-border' : ''}`}>
-                <span className="w-2 h-2 rounded-full bg-blue" />
+                <span className="w-2 h-2 rounded-full bg-green" />
                 <span className="text-sm font-medium">{c.label}</span>
               </div>
             ))}

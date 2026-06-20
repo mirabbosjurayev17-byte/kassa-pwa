@@ -8,19 +8,11 @@
 }
 
 @layer utilities {
-  .bg-hero-gradient {
-    background: linear-gradient(160deg, #0350A7 0%, #2A61EE 50%, #1B4FCC 100%);
+  .card {
+    @apply bg-surface rounded-xl border border-border shadow-card;
   }
-  .bg-card-income {
-    background: linear-gradient(135deg, #0DC7E0 0%, #2A61EE 100%);
-  }
-  .bg-card-outcome {
-    background: linear-gradient(135deg, #2A61EE 0%, #0350A7 100%);
-  }
-  .text-gradient-teal {
-    background: linear-gradient(90deg, #0DC7E0, #47D4E7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .card-dark {
+    background: linear-gradient(135deg, #1A2B1A 0%, #0F1A0F 100%);
+    @apply rounded-xl;
   }
 }

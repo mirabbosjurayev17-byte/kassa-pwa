@@ -84,7 +84,7 @@ export default function NewTransactionPage() {
             <button
               onClick={() => handleTypeChange('sale')}
               className={`py-3 rounded-lg text-sm font-bold transition-colors ${
-                type === 'sale' ? 'bg-blue text-white' : 'text-mute'
+                type === 'sale' ? 'bg-green text-white' : 'text-mute'
               }`}
             >
               {tr.newTx.sale}
@@ -167,7 +167,7 @@ export default function NewTransactionPage() {
             onChange={e => setNote(e.target.value)}
             placeholder={tr.newTx.notePlaceholder}
             rows={3}
-            className="w-full bg-surface border border-border rounded-xl p-4 text-sm outline-none focus:border-blue transition-colors resize-none"
+            className="w-full bg-surface border border-border rounded-xl p-4 text-sm outline-none focus:border-green transition-colors resize-none"
           />
         </div>
 
@@ -175,7 +175,7 @@ export default function NewTransactionPage() {
         <button
           onClick={handleSubmit}
           disabled={amount <= 0 || isSubmitting}
-          className="w-full bg-blue text-white rounded-xl py-4 font-bold text-base disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
+          className="w-full bg-green text-white rounded-xl py-4 font-bold text-base disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
         >
           {isSubmitting ? tr.newTx.saving : tr.newTx.save}
         </button>

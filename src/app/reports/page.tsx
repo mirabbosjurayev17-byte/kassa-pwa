@@ -229,7 +229,7 @@ export default function ReportsPage() {
                 labelFormatter={l => lang === 'ru' ? `${l} день` : `${l}-kun`}
                 contentStyle={{ borderRadius: 12, border: '1px solid #E2E8F0', fontSize: 13, fontWeight: 600 }}
               />
-              <Line type="monotone" dataKey="foyda" stroke="#0DC7E0" strokeWidth={2.5} dot={false} activeDot={{ r: 5, fill: '#0DC7E0' }} />
+              <Line type="monotone" dataKey="foyda" stroke="#2DB550" strokeWidth={2.5} dot={false} activeDot={{ r: 5, fill: '#2DB550' }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -251,7 +251,7 @@ export default function ReportsPage() {
                     <p className="text-sm font-bold tabular-nums">{Math.round(c.pct)}%</p>
                   </div>
                   <div className="h-1.5 bg-subtle rounded-full overflow-hidden">
-                    <div className="h-full bg-blue rounded-full transition-all" style={{ width: `${c.pct}%` }} />
+                    <div className="h-full bg-green rounded-full transition-all" style={{ width: `${c.pct}%` }} />
                   </div>
                   <p className="text-xs text-mute mt-1 tabular-nums">{formatNumber(c.sum)} so'm</p>
                 </div>
@@ -293,7 +293,7 @@ export default function ReportsPage() {
               weekday: 'long', day: 'numeric', month: 'long',
             })}
           </p>
-          <p className="text-3xl font-black tabular-nums text-blue-dark mt-2">
+          <p className="text-3xl font-black tabular-nums text-green-dark mt-2">
             +{formatNumber(bestDay.foyda)} <span className="text-base text-mute font-bold">so'm</span>
           </p>
         </div>
