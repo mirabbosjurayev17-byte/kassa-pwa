@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter-tight)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-onest)', 'system-ui', 'sans-serif'],
       },
       colors: {
         base: '#E8EEE8',     // sage green background

@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter_Tight } from 'next/font/google'
+import { Onest } from 'next/font/google'
 import './globals.css'
 import { OnboardingGuard } from '@/components/OnboardingGuard'
 import { ResponsiveShellWrapper } from '@/components/layout/ResponsiveShellWrapper'
 
-const interTight = Inter_Tight({
+const onest = Onest({
   subsets: ['latin', 'cyrillic'],
   weight: ['400', '500'],
-  variable: '--font-inter-tight',
+  variable: '--font-onest',
 })
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="uz" className={interTight.variable}>
+    <html lang="uz" className={onest.variable}>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#141F14" />
@@ -31,7 +31,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Kassa" />
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
       </head>
-      <body className={`${interTight.className} bg-base`}>
+      <body className={`${onest.className} bg-base`}>
         <OnboardingGuard>
           <ResponsiveShellWrapper>{children}</ResponsiveShellWrapper>
         </OnboardingGuard>
