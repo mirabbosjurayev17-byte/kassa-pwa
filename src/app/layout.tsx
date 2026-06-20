@@ -1,18 +1,19 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next'
+import './globals.css'
+import { ResponsiveShell } from '@/components/layout/ResponsiveShell'
 
 export const metadata: Metadata = {
-  title: "Kassa",
-  description: "Kunlik savdo va xarajat trackeri",
-};
+  title: 'Kassa — Kunlik savdo va xarajat trackeri',
+  description: 'Do\'kon, kafe va ustaxonalar uchun PWA',
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="uz" className="h-full">
+    <html lang="uz">
       <head>
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link
@@ -20,7 +21,9 @@ export default function RootLayout({
           href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap"
         />
       </head>
-      <body className="min-h-full">{children}</body>
+      <body>
+        <ResponsiveShell>{children}</ResponsiveShell>
+      </body>
     </html>
-  );
+  )
 }

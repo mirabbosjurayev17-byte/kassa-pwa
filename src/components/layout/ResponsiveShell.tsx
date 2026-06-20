@@ -1,4 +1,17 @@
-// Placeholder — Step 3'da to'ldiriladi (mobile bottom nav vs desktop sidebar)
-export default function ResponsiveShell() {
-  return null
+import type { ReactNode } from 'react'
+import { MobileBottomNav } from './MobileBottomNav'
+import { DesktopSidebar } from './DesktopSidebar'
+
+export function ResponsiveShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="min-h-screen flex">
+      <DesktopSidebar />
+
+      <div className="flex-1 min-w-0 pb-28 lg:pb-0">
+        {children}
+      </div>
+
+      <MobileBottomNav />
+    </div>
+  )
 }

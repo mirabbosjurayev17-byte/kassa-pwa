@@ -5,10 +5,8 @@ import { useKassaStore } from '@/store/useKassaStore'
 import { formatNumber } from '@/lib/formatCurrency'
 
 export default function Home() {
-  // Hydration guard: zustand persist localStorage'dan sync rehydrate qiladi.
-  // Server bo'sh state render qiladi, shuning uchun birinchi client render ham
-  // bo'sh bo'lishi shart (mounted=false -> null), aks holda refresh'dan keyin
-  // hydration mismatch xatosi chiqadi. Step 4'da skeleton bilan almashtiramiz.
+  // Hydration guard: zustand persist localStorage'dan rehydrate qiladi.
+  // Step 4'da skeleton bilan almashtiramiz.
   const [mounted, setMounted] = useState(false)
   const { transactions, settings, seedDemo } = useKassaStore()
 
@@ -29,8 +27,8 @@ export default function Home() {
   const todayProfit = todaySales - todayExpenses
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-6">
-      <div className="text-center max-w-md">
+    <main className="px-5 lg:px-10 py-8">
+      <div className="max-w-md">
         <p className="text-xs uppercase tracking-wide text-mute font-bold mb-2">
           {settings.businessName} · Bugungi sof foyda
         </p>
@@ -39,7 +37,7 @@ export default function Home() {
         </p>
         <p className="text-sm text-mute mt-2">so'm</p>
 
-        <div className="mt-8 pt-6 border-t border-border grid grid-cols-2 gap-4 text-left">
+        <div className="mt-8 pt-6 border-t border-border grid grid-cols-2 gap-4">
           <div>
             <p className="text-xs text-mute font-medium">Savdo</p>
             <p className="text-lg font-bold tabular-nums">{formatNumber(todaySales)}</p>
