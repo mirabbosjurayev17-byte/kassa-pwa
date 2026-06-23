@@ -29,7 +29,7 @@ export function showToast(message: string, type: ToastType = 'success') {
     bottom: 100px;
     left: 50%;
     transform: translateX(-50%);
-    background: #0F172A;
+    background: #021B1A;
     color: white;
     padding: 12px 24px;
     border-radius: 100px;

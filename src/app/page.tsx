@@ -16,7 +16,7 @@ import { LangSwitch } from '@/components/layout/LangSwitch'
 import { SearchModal } from '@/components/SearchModal'
 import { NotifPanel } from '@/components/NotifPanel'
 
-const DONUT_COLORS = ['#0F1A0F', '#2DB550', '#5DC877', '#A8D5B5', '#DCE5DC']
+const DONUT_COLORS = ['#021B1A', '#03624C', '#17876D', '#2CC295', '#AACBC4']
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -36,6 +36,13 @@ export default function Home() {
   }, [seedDemo])
 
   const allCategories = [...saleCategories, ...expenseCategories]
+
+  const ownerInitials = settings.ownerName
+    .split(' ')
+    .map(w => w[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
 
   const today = new Date()
   const todayTx = filterByDay(transactions, today)
@@ -113,11 +120,11 @@ export default function Home() {
         <div className="flex items-start justify-between mb-7">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-dark flex items-center justify-center">
-              <span className="text-green font-bold">AK</span>
+              <span className="text-green-bright font-bold">{ownerInitials}</span>
             </div>
             <div>
               <h1 className="text-xl font-semibold">
-                {tr.home.greeting}, {settings.businessName.split(' ')[0]} 👋
+                {tr.home.greeting}, {settings.ownerName} 👋
               </h1>
               <p className="text-sm text-mute mt-0.5">
                 {lang === 'uz' ? "Bugungi moliyaviy ko'rinish" : 'Ваш финансовый обзор на сегодня'}
@@ -162,7 +169,7 @@ export default function Home() {
               {yesterdayProfit > 0 && (
                 <div className="flex items-center gap-2 mt-4">
                   <span className={`flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${
-                    delta >= 0 ? 'bg-green/20 text-green' : 'bg-negative/20 text-negative'
+                    delta >= 0 ? 'bg-green-bright/15 text-green-bright' : 'bg-negative/20 text-negative'
                   }`}>
                     {delta >= 0 ? '↗' : '↘'} {Math.abs(deltaPercent)}%
                   </span>
@@ -208,7 +215,7 @@ export default function Home() {
                         <Cell key={index} fill={DONUT_COLORS[index % DONUT_COLORS.length]} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(v) => formatNumber(Number(v)) + " so'm"} contentStyle={{ borderRadius: 12, border: '1px solid #DCE5DC', fontSize: 13 }} />
+                    <Tooltip formatter={(v) => formatNumber(Number(v)) + " so'm"} contentStyle={{ borderRadius: 12, border: '1px solid #DBE7E1', fontSize: 13 }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -232,7 +239,7 @@ export default function Home() {
           {/* AI Insight */}
           <div className="col-span-4 card-dark p-6 flex flex-col">
             <div className="flex items-center gap-2 mb-4">
-              <Lightbulb size={16} className="text-green" />
+              <Lightbulb size={16} className="text-green-bright" />
               <p className="text-sm font-semibold text-white">{lang === 'uz' ? 'AI Tahlil' : 'AI Анализ'}</p>
             </div>
             <p className="text-white/70 text-sm leading-relaxed flex-1">
@@ -240,7 +247,7 @@ export default function Home() {
                 ? `${settings.businessName} bu hafta mahsulot xarajatida 32% o'sish ko'rsatdi. Tavsiya: etkazib beruvchilarni ko'rib chiqing.`
                 : `${settings.businessName} показал рост расходов на товары на 32% на этой неделе. Рекомендация: пересмотрите поставщиков.`}
             </p>
-            <button className="mt-5 w-full py-2.5 rounded-lg bg-green text-white text-sm font-semibold hover:bg-green-dark transition-colors">
+            <button className="mt-5 w-full py-2.5 rounded-lg bg-green-bright text-ink text-sm font-semibold hover:bg-green-light transition-colors">
               {lang === 'uz' ? "Batafsil ko'rish" : 'Подробнее'}
             </button>
           </div>
@@ -332,7 +339,7 @@ export default function Home() {
           <p className="text-white/40 text-sm mt-1">so'm</p>
           {yesterdayProfit > 0 && (
             <span className={`inline-flex items-center gap-1 mt-3 text-xs font-semibold px-2.5 py-1 rounded-full ${
-              delta >= 0 ? 'bg-green/20 text-green' : 'bg-negative/20 text-negative'
+              delta >= 0 ? 'bg-green-bright/15 text-green-bright' : 'bg-negative/20 text-negative'
             }`}>
               {delta >= 0 ? '↗' : '↘'} {Math.abs(deltaPercent)}% {tr.home.yesterday}
             </span>

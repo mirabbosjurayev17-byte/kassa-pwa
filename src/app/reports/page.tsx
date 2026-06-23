@@ -221,15 +221,15 @@ export default function ReportsPage() {
         <div className="h-56 lg:h-72">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={dailyData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
-              <XAxis dataKey="kun" stroke="#64748B" fontSize={11} tickLine={false} axisLine={false} />
-              <YAxis stroke="#64748B" fontSize={11} tickLine={false} axisLine={false} tickFormatter={v => formatCompact(Number(v))} width={52} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#DBE7E1" vertical={false} />
+              <XAxis dataKey="kun" stroke="#5E726B" fontSize={11} tickLine={false} axisLine={false} />
+              <YAxis stroke="#5E726B" fontSize={11} tickLine={false} axisLine={false} tickFormatter={v => formatCompact(Number(v))} width={52} />
               <Tooltip
                 formatter={(v) => [formatNumber(Number(v)) + " so'm", tr.transactions.profit]}
                 labelFormatter={l => lang === 'ru' ? `${l} день` : `${l}-kun`}
-                contentStyle={{ borderRadius: 12, border: '1px solid #E2E8F0', fontSize: 13, fontWeight: 600 }}
+                contentStyle={{ borderRadius: 12, border: '1px solid #DBE7E1', fontSize: 13, fontWeight: 600 }}
               />
-              <Line type="monotone" dataKey="foyda" stroke="#2DB550" strokeWidth={2.5} dot={false} activeDot={{ r: 5, fill: '#2DB550' }} />
+              <Line type="monotone" dataKey="foyda" stroke="#03624C" strokeWidth={2.5} dot={false} activeDot={{ r: 5, fill: '#00DF81' }} />
             </LineChart>
           </ResponsiveContainer>
         </div>

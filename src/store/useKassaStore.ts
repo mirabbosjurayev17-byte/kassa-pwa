@@ -21,8 +21,9 @@ type KassaState = {
 }
 
 const DEFAULT_SETTINGS: Settings = {
-  businessName: 'AutoParts Komilov',
-  location: 'Sergeli',
+  businessName: 'Mehr Market',
+  ownerName: 'Aziz Karimov',
+  location: 'Yunusobod',
   currency: 'UZS',
   onboardingCompleted: false,
   lang: 'uz',
@@ -85,11 +86,11 @@ export const useKassaStore = create<KassaState>()(
     {
       name: 'kassa-storage',
       storage: createJSONStorage(() => localStorage),
-      version: 2,
+      version: 3,
       migrate: (persistedState, version) => {
-        if (version < 2) {
-          // v1 (eski "Olov Grill" demo) state'ini rad etamiz: yangi default settings +
-          // bo'sh transactions (bosh sahifa qayta seed qiladi). Aksiyalar merge orqali qo'shiladi.
+        if (version < 3) {
+          // Eski demo state'ini (AutoParts/Olov Grill) rad etamiz: yangi default settings +
+          // bo'sh transactions (bosh sahifa qayta seed qiladi). Mehr Market identitetiga o'tamiz.
           return {
             transactions: [] as Transaction[],
             settings: DEFAULT_SETTINGS,

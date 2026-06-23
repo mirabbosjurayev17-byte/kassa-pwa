@@ -13,6 +13,7 @@ export type Currency = 'UZS' | 'USD'
 
 export type Settings = {
   businessName: string
+  ownerName: string
   location: string
   currency: Currency
   onboardingCompleted: boolean

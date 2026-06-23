@@ -8,30 +8,32 @@ export default {
         sans: ['var(--font-onest)', 'system-ui', 'sans-serif'],
       },
       colors: {
-        base: '#E8EEE8',     // sage green background
+        // ── Emerald / Caribbean Green system (brand palette) ──
+        base: '#EEF4F1',     // soft anti-flash mint background
         surface: '#FFFFFF',
-        ink: '#0F1A0F',      // near-black (dark green tint)
-        mute: '#6B7B6B',
-        border: '#DCE5DC',
-        subtle: '#F2F5F2',
+        ink: '#021B1A',      // Rich Black (deep emerald-black)
+        mute: '#5E726B',     // muted stone-green
+        border: '#DBE7E1',
+        subtle: '#F1F7F6',   // Anti-Flash White
 
-        // Dark card (hero)
+        // Dark card (hero) — Rich Black / Pine
         dark: {
-          DEFAULT: '#141F14',
-          card: '#1A2B1A',
+          DEFAULT: '#021B1A', // Rich Black
+          card: '#06302B',    // Pine
         },
 
         // Green accent
         green: {
-          DEFAULT: '#2DB550',
-          dark: '#1E8A3A',
-          light: '#5DC877',
-          pale: '#E6F5EB',
+          DEFAULT: '#03624C', // Bangladesh Green — workhorse (white text on it, links on light)
+          dark: '#06302B',    // Pine — hover/darker
+          light: '#2CC295',   // Mountain Meadow
+          bright: '#00DF81',  // Caribbean Green — glow accent on dark surfaces / FAB
+          pale: '#E2F6EC',    // light mint tint
         },
 
         // Semantic
-        positive: '#2DB550',
-        negative: '#E53935',
+        positive: '#0E7A56',
+        negative: '#E5484D',
       },
       borderRadius: {
         sm: '8px',

@@ -12,7 +12,11 @@
     @apply bg-surface rounded-xl border border-border shadow-card;
   }
   .card-dark {
-    background: linear-gradient(135deg, #1A2B1A 0%, #0F1A0F 100%);
+    background: linear-gradient(145deg, #03624C 0%, #06302B 52%, #021B1A 100%);
     @apply rounded-xl;
+  }
+  /* Caribbean-green glow for the central + action */
+  .fab-glow {
+    box-shadow: 0 10px 28px rgba(0, 223, 129, 0.40), 0 2px 6px rgba(2, 27, 26, 0.25);
   }
 }

@@ -10,12 +10,13 @@ type Slide = 0 | 1 | 2
 
 export default function OnboardingPage() {
   const router = useRouter()
-  const { tr } = useLang()
+  const { tr, lang } = useLang()
   const updateSettings = useKassaStore(s => s.updateSettings)
   const seedDemo = useKassaStore(s => s.seedDemo)
 
   const [slide, setSlide] = useState<Slide>(0)
   const [businessName, setBusinessName] = useState('')
+  const [ownerName, setOwnerName] = useState('')
   const [location, setLocation] = useState('')
   const [currency, setCurrency] = useState<'UZS' | 'USD'>('UZS')
   const [error, setError] = useState('')
@@ -34,6 +35,7 @@ export default function OnboardingPage() {
     }
     updateSettings({
       businessName: name,
+      ownerName: ownerName.trim() || (lang === 'uz' ? 'Ega' : 'Владелец'),
       location: location.trim() || 'Toshkent',
       currency,
       onboardingCompleted: true,
@@ -49,7 +51,7 @@ export default function OnboardingPage() {
         {/* Logo */}
         <div className="flex items-center gap-2 mb-12">
           <div className="w-9 h-9 rounded-lg bg-ink flex items-center justify-center">
-            <span className="text-green font-black text-lg leading-none">K</span>
+            <span className="text-green-bright font-black text-lg leading-none">K</span>
           </div>
           <span className="font-black text-xl">{tr.appName}</span>
         </div>
@@ -136,6 +138,19 @@ export default function OnboardingPage() {
                   autoFocus
                 />
                 {error && <p className="text-xs text-ink font-bold mt-1.5">{error}</p>}
+              </div>
+
+              <div>
+                <label className="text-xs uppercase tracking-wide text-mute font-bold block mb-2">
+                  {lang === 'uz' ? 'Ega ismi' : 'Имя владельца'} <span className="text-mute font-medium normal-case tracking-normal">{tr.newTx.noteOptional}</span>
+                </label>
+                <input
+                  type="text"
+                  value={ownerName}
+                  onChange={e => setOwnerName(e.target.value)}
+                  placeholder={lang === 'uz' ? 'Aziz Karimov' : 'Азиз Каримов'}
+                  className="w-full bg-surface border border-border rounded-xl px-4 py-3.5 text-sm font-medium outline-none focus:border-green transition-colors"
+                />
               </div>
 
               <div>

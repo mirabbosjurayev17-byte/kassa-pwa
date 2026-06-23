@@ -181,6 +181,7 @@ function CategoryManager({ type, onClose }: { type: 'sale' | 'expense'; onClose:
 
 type ModalType =
   | { kind: 'name' }
+  | { kind: 'owner' }
   | { kind: 'location' }
   | { kind: 'currency' }
   | { kind: 'categories'; catType: 'sale' | 'expense' }
@@ -226,6 +227,7 @@ export default function SettingsPage() {
       title: tr.settings.business,
       items: [
         { label: tr.settings.name, value: settings.businessName, onClick: () => setModal({ kind: 'name' }) },
+        { label: tr.settings.owner, value: settings.ownerName, onClick: () => setModal({ kind: 'owner' }) },
         { label: tr.settings.location, value: settings.location, onClick: () => setModal({ kind: 'location' }) },
         { label: tr.settings.currency, value: settings.currency === 'UZS' ? "so'm" : 'USD', onClick: () => setModal({ kind: 'currency' }) },
       ],
@@ -287,6 +289,11 @@ export default function SettingsPage() {
       {modal?.kind === 'name' && (
         <EditModal title={tr.settings.name} value={settings.businessName} placeholder={tr.settings.namePlaceholder}
           onSave={v => { updateSettings({ businessName: v }); showToast(tr.settings.updated.name) }}
+          onClose={() => setModal(null)} />
+      )}
+      {modal?.kind === 'owner' && (
+        <EditModal title={tr.settings.owner} value={settings.ownerName} placeholder={tr.settings.ownerPlaceholder}
+          onSave={v => { updateSettings({ ownerName: v }); showToast(tr.settings.updated.owner) }}
           onClose={() => setModal(null)} />
       )}
       {modal?.kind === 'location' && (

@@ -46,7 +46,7 @@ export function DesktopSidebar() {
       {/* Logo */}
       <div className="px-6 py-7 flex items-center gap-2.5">
         <div className="w-8 h-8 rounded-lg bg-dark flex items-center justify-center">
-          <span className="text-green font-bold text-sm">K</span>
+          <span className="text-green-bright font-bold text-sm">K</span>
         </div>
         <span className="font-semibold text-base tracking-tight">KASSA</span>
       </div>
@@ -70,11 +70,11 @@ export function DesktopSidebar() {
       <div className="px-3 pb-6">
         <div className="bg-dark-card rounded-xl p-4">
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-6 h-6 rounded-full bg-green flex items-center justify-center">
-              <Sparkles size={12} className="text-white" />
+            <div className="w-6 h-6 rounded-full bg-green-bright flex items-center justify-center">
+              <Sparkles size={12} className="text-ink" />
             </div>
             <p className="text-xs font-semibold text-white">{lang === 'uz' ? 'AI Maslahat' : 'AI Совет'}</p>
-            <div className="w-1.5 h-1.5 rounded-full bg-green ml-auto" />
+            <div className="w-1.5 h-1.5 rounded-full bg-green-bright ml-auto animate-pulse" />
           </div>
           <p className="text-xs text-white/60 leading-relaxed">
             {lang === 'uz'

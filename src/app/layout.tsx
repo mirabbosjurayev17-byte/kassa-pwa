@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="uz" className={onest.variable}>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#141F14" />
+        <meta name="theme-color" content="#021B1A" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
