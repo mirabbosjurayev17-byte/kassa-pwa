@@ -7,7 +7,7 @@ export function ResponsiveShell({ children }: { children: ReactNode }) {
     <div className="min-h-screen flex">
       <DesktopSidebar />
 
-      <div className="flex-1 min-w-0 pb-28 lg:pb-0">
+      <div className="flex-1 min-w-0 pb-32 lg:pb-0">
         {children}
       </div>
 

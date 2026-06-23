@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, BarChart3, ListOrdered, FolderTree, Users, Settings, Sparkles } from 'lucide-react'
+import { Home, BarChart3, ListOrdered, FolderTree, Users, Settings, Plus, Sparkles } from 'lucide-react'
 import { useLang } from '@/hooks/useLang'
 
 type NavItem = { href: string; label: string; icon: typeof Home }
@@ -29,14 +29,17 @@ export function DesktopSidebar() {
       <Link
         key={item.href}
         href={item.href}
-        className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-0.5 transition-all ${
+        aria-current={active ? 'page' : undefined}
+        className={`flex items-center gap-3 px-3 py-2.5 rounded-2xl mb-1 transition-all ${
           active ? 'bg-dark text-white' : 'text-mute hover:bg-subtle hover:text-ink'
         }`}
       >
-        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${active ? 'bg-green' : 'bg-subtle'}`}>
-          <Icon size={16} strokeWidth={1.5} className={active ? 'text-white' : 'text-mute'} />
+        <div className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors ${
+          active ? 'bg-green-bright' : 'bg-subtle'
+        }`}>
+          <Icon size={16} strokeWidth={2} className={active ? 'text-ink' : 'text-mute'} />
         </div>
-        <span className={`text-sm ${active ? 'font-semibold' : 'font-medium'}`}>{item.label}</span>
+        <span className={`text-sm ${active ? 'font-medium' : 'font-normal'}`}>{item.label}</span>
       </Link>
     )
   }
@@ -45,42 +48,60 @@ export function DesktopSidebar() {
     <aside className="hidden lg:flex w-64 bg-surface border-r border-border flex-col flex-shrink-0 sticky top-0 h-screen">
       {/* Logo */}
       <div className="px-6 py-7 flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-lg bg-dark flex items-center justify-center">
-          <span className="text-green-bright font-bold text-sm">K</span>
+        <div className="w-9 h-9 rounded-xl bg-dark flex items-center justify-center">
+          <svg width="20" height="20" viewBox="0 0 512 512" fill="none">
+            <g stroke="#00DF81" strokeWidth="50" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M190 150 V362" /><path d="M190 258 L332 150" /><path d="M190 258 L336 362" />
+            </g>
+          </svg>
         </div>
-        <span className="font-semibold text-base tracking-tight">KASSA</span>
+        <span className="font-semibold text-base tracking-tight">Kassa</span>
       </div>
 
-      {/* Nav sections */}
-      <div className="px-3 flex-1 overflow-y-auto">
-        <p className="text-xs font-medium text-mute uppercase tracking-widest px-3 mb-2">
-          {lang === 'uz' ? 'ASOSIY' : 'ГЛАВНОЕ'}
+      {/* Nav */}
+      <div className="px-3 flex-1 overflow-y-auto no-scrollbar">
+        <p className="text-[11px] font-medium text-mute uppercase tracking-widest px-3 mb-2">
+          {lang === 'uz' ? 'Asosiy' : 'Главное'}
         </p>
         {MAIN_ITEMS.map(renderItem)}
 
         <div className="mt-6">
-          <p className="text-xs font-medium text-mute uppercase tracking-widest px-3 mb-2">
-            {lang === 'uz' ? 'BOSHQALAR' : 'ДРУГОЕ'}
+          <p className="text-[11px] font-medium text-mute uppercase tracking-widest px-3 mb-2">
+            {lang === 'uz' ? 'Boshqalar' : 'Другое'}
           </p>
           {SECONDARY_ITEMS.map(renderItem)}
         </div>
       </div>
 
-      {/* AI Assistant card */}
+      {/* New record CTA */}
+      <div className="px-3 pb-3">
+        <Link
+          href="/transactions/new"
+          className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl bg-green-bright text-ink text-sm font-medium hover:brightness-105 active:scale-[0.99] transition-all"
+        >
+          <Plus size={18} strokeWidth={2.5} />
+          {lang === 'uz' ? 'Yangi yozuv' : 'Новая запись'}
+        </Link>
+      </div>
+
+      {/* AI card */}
       <div className="px-3 pb-6">
-        <div className="bg-dark-card rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-6 h-6 rounded-full bg-green-bright flex items-center justify-center">
-              <Sparkles size={12} className="text-ink" />
+        <div className="relative card-dark rounded-2xl p-4 overflow-hidden">
+          <div className="absolute inset-0 card-dark-sheen pointer-events-none" />
+          <div className="relative">
+            <div className="flex items-center gap-2 mb-2.5">
+              <div className="w-6 h-6 rounded-full bg-green-bright flex items-center justify-center">
+                <Sparkles size={12} className="text-ink" />
+              </div>
+              <p className="text-xs font-medium text-white">{lang === 'uz' ? 'AI maslahat' : 'AI совет'}</p>
+              <span className="w-1.5 h-1.5 rounded-full bg-green-bright ml-auto animate-pulse" />
             </div>
-            <p className="text-xs font-semibold text-white">{lang === 'uz' ? 'AI Maslahat' : 'AI Совет'}</p>
-            <div className="w-1.5 h-1.5 rounded-full bg-green-bright ml-auto animate-pulse" />
+            <p className="text-xs text-white/65 leading-relaxed">
+              {lang === 'uz'
+                ? 'Kunlik foydangizni kuzatib boring va xarajatlarni nazoratda tuting.'
+                : 'Следите за дневной прибылью и держите расходы под контролем.'}
+            </p>
           </div>
-          <p className="text-xs text-white/60 leading-relaxed">
-            {lang === 'uz'
-              ? "Bugungi xarajat kechagiga nisbatan 23% yuqori."
-              : "Сегодняшние расходы на 23% выше вчерашних."}
-          </p>
         </div>
       </div>
     </aside>

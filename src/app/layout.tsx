@@ -1,18 +1,31 @@
-import type { Metadata } from 'next'
-import { Onest } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import { GeistSans } from 'geist/font/sans'
 import './globals.css'
 import { OnboardingGuard } from '@/components/OnboardingGuard'
 import { ResponsiveShellWrapper } from '@/components/layout/ResponsiveShellWrapper'
-
-const onest = Onest({
-  subsets: ['latin', 'cyrillic'],
-  weight: ['400', '500'],
-  variable: '--font-onest',
-})
+import { TopProgressBar } from '@/components/system/TopProgressBar'
 
 export const metadata: Metadata = {
   title: 'Kassa — Kunlik savdo va xarajat trackeri',
   description: "Do'kon, kafe va ustaxonalar uchun kunlik kassa dasturi",
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    title: 'Kassa',
+    statusBarStyle: 'default',
+  },
+  icons: {
+    icon: '/icon.svg',
+    apple: '/icons/icon-192.png',
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#021B1A',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({
@@ -21,17 +34,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="uz" className={onest.variable}>
-      <head>
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#021B1A" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Kassa" />
-        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
-      </head>
-      <body className={`${onest.className} bg-base`}>
+    <html lang="uz" className={GeistSans.variable}>
+      <body className="bg-base">
+        <TopProgressBar />
         <OnboardingGuard>
           <ResponsiveShellWrapper>{children}</ResponsiveShellWrapper>
         </OnboardingGuard>

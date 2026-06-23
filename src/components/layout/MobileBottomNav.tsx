@@ -23,34 +23,36 @@ export function MobileBottomNav() {
       <Link
         key={item.href}
         href={item.href}
-        className="flex flex-col items-center gap-1 px-3 py-2 flex-1"
+        aria-current={active ? 'page' : undefined}
+        className={`flex items-center gap-2 h-11 rounded-full transition-all duration-300 ${
+          active ? 'bg-white/12 px-4' : 'px-3'
+        }`}
       >
         <Icon
-          size={22}
-          strokeWidth={active ? 2.2 : 1.8}
-          className={active ? 'text-green' : 'text-mute'}
+          size={21}
+          strokeWidth={active ? 2.3 : 1.9}
+          className={active ? 'text-green-bright' : 'text-white/55'}
         />
-        <span className={`text-xs whitespace-nowrap ${active ? 'font-semibold text-green' : 'font-medium text-mute'}`}>
-          {tr.nav[item.key]}
-        </span>
+        {active && (
+          <span className="text-[13px] font-medium text-white whitespace-nowrap">
+            {tr.nav[item.key]}
+          </span>
+        )}
       </Link>
     )
   }
 
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-sm border-t border-border z-40">
-      <div className="flex items-center justify-around px-2 pt-2 pb-6 max-w-md mx-auto">
+    <nav className="lg:hidden fixed inset-x-0 bottom-safe z-40 flex justify-center px-5">
+      <div className="flex items-center gap-1 bg-dark/95 backdrop-blur-md rounded-full p-1.5 shadow-float">
         {ITEMS.slice(0, 2).map(renderItem)}
 
-        {/* O'rta + tugma — dark FAB */}
         <Link
           href="/transactions/new"
-          className="flex flex-col items-center -mt-6 px-3"
+          className="mx-0.5 w-12 h-12 rounded-full bg-green-bright flex items-center justify-center fab-glow active:scale-90 transition-transform"
           aria-label={tr.home.addNew}
         >
-          <div className="w-14 h-14 rounded-full bg-green-bright flex items-center justify-center fab-glow active:scale-95 transition-transform">
-            <Plus size={26} strokeWidth={2.5} className="text-ink" />
-          </div>
+          <Plus size={24} strokeWidth={2.5} className="text-ink" />
         </Link>
 
         {ITEMS.slice(2).map(renderItem)}

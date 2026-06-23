@@ -1,0 +1,14 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="kassaG" x1="96" y1="96" x2="416" y2="416" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00DF81"/>
+      <stop offset="1" stop-color="#2CC295"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="120" fill="#021B1A"/>
+  <g fill="none" stroke="url(#kassaG)" stroke-width="50" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M190 150 V362"/>
+    <path d="M190 258 L332 150"/>
+    <path d="M190 258 L336 362"/>
+  </g>
+</svg>

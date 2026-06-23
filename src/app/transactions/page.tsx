@@ -8,6 +8,7 @@ import { formatNumber } from '@/lib/formatCurrency'
 import { sumByType, daysAgo, getProfit } from '@/lib/dateUtils'
 import { TransactionItem } from '@/components/home/TransactionItem'
 import { showToast } from '@/lib/toast'
+import { ScreenSkeleton } from '@/components/system/Skeleton'
 
 type FilterRange = 'today' | 'week' | 'month'
 
@@ -66,11 +67,11 @@ export default function TransactionsPage() {
     }, 200)
   }
 
-  if (!mounted) return null
+  if (!mounted) return <ScreenSkeleton />
 
   return (
-    <main className="px-5 lg:px-10 py-8">
-      <h1 className="text-3xl font-black tracking-tight mb-6">{tr.transactions.title}</h1>
+    <main className="px-5 lg:px-10 py-8 max-w-5xl mx-auto animate-fade-up">
+      <h1 className="text-3xl font-semibold tracking-tight mb-6">{tr.transactions.title}</h1>
 
       {/* Filter */}
       <div className="inline-flex items-center gap-1 p-1 bg-subtle rounded-xl mb-6">
@@ -78,7 +79,7 @@ export default function TransactionsPage() {
           <button
             key={r}
             onClick={() => setRange(r)}
-            className={`px-4 py-2 text-sm font-bold rounded-lg transition-colors ${
+            className={`px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
               range === r ? 'bg-surface shadow-sm text-ink' : 'text-mute'
             }`}
           >
@@ -88,28 +89,28 @@ export default function TransactionsPage() {
       </div>
 
       {/* Summary */}
-      <div className="bg-surface rounded-2xl border border-border p-6 mb-8 max-w-2xl">
+      <div className="card p-6 mb-8 max-w-2xl">
         <div className="grid grid-cols-3 gap-4">
           <div>
             <div className="flex items-center gap-1.5 mb-2">
               <span className="w-2 h-2 rounded-full bg-green" />
-              <p className="text-xs text-mute font-bold uppercase tracking-wide">{tr.home.sales}</p>
+              <p className="text-xs text-mute font-semibold uppercase tracking-wide">{tr.home.sales}</p>
             </div>
-            <p className="text-xl lg:text-2xl font-black tabular-nums">{formatNumber(sales)}</p>
+            <p className="text-xl lg:text-2xl font-semibold tabular-nums">{formatNumber(sales)}</p>
           </div>
           <div>
             <div className="flex items-center gap-1.5 mb-2">
               <span className="w-2 h-2 rounded-full bg-ink" />
-              <p className="text-xs text-mute font-bold uppercase tracking-wide">{tr.home.expense}</p>
+              <p className="text-xs text-mute font-semibold uppercase tracking-wide">{tr.home.expense}</p>
             </div>
-            <p className="text-xl lg:text-2xl font-black tabular-nums">{formatNumber(expenses)}</p>
+            <p className="text-xl lg:text-2xl font-semibold tabular-nums">{formatNumber(expenses)}</p>
           </div>
           <div>
             <div className="flex items-center gap-1.5 mb-2">
               <span className="w-2 h-2 rounded-full bg-green-dark" />
-              <p className="text-xs text-mute font-bold uppercase tracking-wide">{tr.transactions.profit}</p>
+              <p className="text-xs text-mute font-semibold uppercase tracking-wide">{tr.transactions.profit}</p>
             </div>
-            <p className="text-xl lg:text-2xl font-black tabular-nums text-green-dark">
+            <p className="text-xl lg:text-2xl font-semibold tabular-nums text-green-dark">
               {formatNumber(profit)}
             </p>
           </div>
@@ -132,15 +133,15 @@ export default function TransactionsPage() {
             return (
               <div key={day}>
                 <div className="flex items-center justify-between mb-3">
-                  <p className="text-xs uppercase tracking-wide text-mute font-bold">{dayLabel}</p>
-                  <p className={`text-xs font-bold tabular-nums ${
+                  <p className="text-xs uppercase tracking-wide text-mute font-semibold">{dayLabel}</p>
+                  <p className={`text-xs font-semibold tabular-nums ${
                     dayProfit >= 0 ? 'text-green-dark' : 'text-mute'
                   }`}>
                     {dayProfit >= 0 ? '+' : ''}{formatNumber(dayProfit)}
                   </p>
                 </div>
 
-                <div className="bg-surface rounded-2xl border border-border overflow-hidden">
+                <div className="card overflow-hidden">
                   {txs.map((tx, i) => (
                     <div
                       key={tx.id}

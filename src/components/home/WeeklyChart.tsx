@@ -43,7 +43,7 @@ export function WeeklyChart() {
                 />
               )}
             </div>
-            <p className={`text-xs ${d.isToday ? 'font-bold text-ink' : 'text-mute font-medium'}`}>
+            <p className={`text-xs ${d.isToday ? 'font-semibold text-ink' : 'text-mute font-medium'}`}>
               {d.isToday ? tr.home.today : tr.home.dayLabels[d.day.getDay()]}
             </p>
           </div>

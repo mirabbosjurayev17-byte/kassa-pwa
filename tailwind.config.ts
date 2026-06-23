@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-onest)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
       },
       colors: {
         // ── Emerald / Caribbean Green system (brand palette) ──
@@ -41,11 +41,33 @@ export default {
         lg: '16px',
         xl: '20px',
         '2xl': '24px',
+        '3xl': '28px',
         full: '9999px',
       },
       boxShadow: {
-        card: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)',
-        'card-hover': '0 4px 12px rgba(0,0,0,0.10)',
+        // soft, modern fintech elevation (subtle on light surfaces)
+        card: '0 1px 2px rgba(2,27,26,0.04), 0 10px 28px -12px rgba(2,27,26,0.10)',
+        'card-hover': '0 2px 6px rgba(2,27,26,0.06), 0 16px 40px -16px rgba(2,27,26,0.16)',
+        float: '0 8px 30px -6px rgba(2,27,26,0.22)',
+      },
+      keyframes: {
+        'bar-indeterminate': {
+          '0%': { transform: 'translateX(-100%) scaleX(0.4)' },
+          '50%': { transform: 'translateX(20%) scaleX(0.6)' },
+          '100%': { transform: 'translateX(120%) scaleX(0.4)' },
+        },
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
+        },
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'bar-indeterminate': 'bar-indeterminate 1.1s ease-in-out infinite',
+        shimmer: 'shimmer 1.6s infinite',
+        'fade-up': 'fade-up 0.4s ease both',
       },
     },
   },

@@ -30,7 +30,7 @@ function EditModal({
     <div className="fixed inset-0 bg-ink/30 backdrop-blur-sm z-50 flex items-end lg:items-center justify-center p-4">
       <div className="bg-surface rounded-2xl border border-border w-full max-w-sm p-6">
         <div className="flex items-center justify-between mb-5">
-          <p className="font-bold">{title}</p>
+          <p className="font-semibold">{title}</p>
           <button onClick={onClose} className="w-8 h-8 rounded-full bg-subtle flex items-center justify-center">
             <X size={16} strokeWidth={2.5} />
           </button>
@@ -45,10 +45,10 @@ function EditModal({
           className="w-full bg-base border border-border rounded-xl px-4 py-3 text-sm font-medium outline-none focus:border-green transition-colors mb-4"
         />
         <div className="grid grid-cols-2 gap-3">
-          <button onClick={onClose} className="py-3 rounded-xl border border-border text-sm font-bold hover:bg-subtle transition-colors">
+          <button onClick={onClose} className="py-3 rounded-xl border border-border text-sm font-semibold hover:bg-subtle transition-colors">
             {tr.settings.cancel}
           </button>
-          <button onClick={handleSave} disabled={!val.trim()} className="py-3 rounded-xl bg-green text-white text-sm font-bold disabled:opacity-30">
+          <button onClick={handleSave} disabled={!val.trim()} className="py-3 rounded-xl bg-green text-white text-sm font-semibold disabled:bg-border disabled:text-mute">
             {tr.settings.save}
           </button>
         </div>
@@ -69,7 +69,7 @@ function CurrencyModal({
     <div className="fixed inset-0 bg-ink/30 backdrop-blur-sm z-50 flex items-end lg:items-center justify-center p-4">
       <div className="bg-surface rounded-2xl border border-border w-full max-w-sm p-6">
         <div className="flex items-center justify-between mb-5">
-          <p className="font-bold">{tr.settings.currency}</p>
+          <p className="font-semibold">{tr.settings.currency}</p>
           <button onClick={onClose} className="w-8 h-8 rounded-full bg-subtle flex items-center justify-center">
             <X size={16} strokeWidth={2.5} />
           </button>
@@ -80,7 +80,7 @@ function CurrencyModal({
               key={c}
               onClick={() => { onSave(c); onClose() }}
               className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl border transition-colors ${
-                current === c ? 'border-ink bg-subtle font-bold' : 'border-border hover:bg-subtle font-medium'
+                current === c ? 'border-ink bg-subtle font-semibold' : 'border-border hover:bg-subtle font-medium'
               }`}
             >
               <span className="text-sm">{c === 'UZS' ? "so'm (UZS)" : 'USD'}</span>
@@ -98,13 +98,13 @@ function ResetModal({ onConfirm, onClose }: { onConfirm: () => void; onClose: ()
   return (
     <div className="fixed inset-0 bg-ink/30 backdrop-blur-sm z-50 flex items-end lg:items-center justify-center p-4">
       <div className="bg-surface rounded-2xl border border-border w-full max-w-sm p-6">
-        <p className="font-black text-lg mb-2">{tr.settings.resetConfirmTitle}</p>
+        <p className="font-semibold text-lg mb-2">{tr.settings.resetConfirmTitle}</p>
         <p className="text-sm text-mute mb-6">{tr.settings.resetConfirmBody}</p>
         <div className="grid grid-cols-2 gap-3">
-          <button onClick={onClose} className="py-3 rounded-xl border border-border text-sm font-bold hover:bg-subtle transition-colors">
+          <button onClick={onClose} className="py-3 rounded-xl border border-border text-sm font-semibold hover:bg-subtle transition-colors">
             {tr.settings.cancel}
           </button>
-          <button onClick={onConfirm} className="py-3 rounded-xl bg-ink text-white text-sm font-bold">
+          <button onClick={onConfirm} className="py-3 rounded-xl bg-ink text-white text-sm font-semibold">
             {tr.settings.delete}
           </button>
         </div>
@@ -141,7 +141,7 @@ function CategoryManager({ type, onClose }: { type: 'sale' | 'expense'; onClose:
     <div className="fixed inset-0 bg-ink/30 backdrop-blur-sm z-50 flex items-end lg:items-center justify-center p-4">
       <div className="bg-surface rounded-2xl border border-border w-full max-w-sm p-6 max-h-[80vh] flex flex-col">
         <div className="flex items-center justify-between mb-5">
-          <p className="font-bold">{type === 'sale' ? tr.settings.saleCategories : tr.settings.expenseCategories}</p>
+          <p className="font-semibold">{type === 'sale' ? tr.settings.saleCategories : tr.settings.expenseCategories}</p>
           <button onClick={onClose} className="w-8 h-8 rounded-full bg-subtle flex items-center justify-center">
             <X size={16} strokeWidth={2.5} />
           </button>
@@ -170,7 +170,7 @@ function CategoryManager({ type, onClose }: { type: 'sale' | 'expense'; onClose:
             placeholder={tr.settings.addCategory}
             className="flex-1 bg-base border border-border rounded-xl px-4 py-2.5 text-sm outline-none focus:border-green transition-colors"
           />
-          <button onClick={handleAdd} disabled={!newLabel.trim()} className="w-10 h-10 rounded-xl bg-green text-white flex items-center justify-center disabled:opacity-30">
+          <button onClick={handleAdd} disabled={!newLabel.trim()} className="w-10 h-10 rounded-xl bg-green text-white flex items-center justify-center disabled:bg-border disabled:text-mute">
             <Plus size={18} strokeWidth={2.5} />
           </button>
         </div>
@@ -219,7 +219,7 @@ export default function SettingsPage() {
       return
     }
     exportToCsv(transactions, allCategories)
-    showToast(`✓ ${transactions.length} ${tr.settings.updated.exported}`)
+    showToast(`${transactions.length} ${tr.settings.updated.exported}`)
   }
 
   const sections: { title: string; items: SettingsItem[] }[] = [
@@ -251,14 +251,14 @@ export default function SettingsPage() {
 
   return (
     <>
-      <main className="px-5 lg:px-10 py-8 max-w-2xl">
-        <h1 className="text-3xl font-black tracking-tight mb-8">{tr.settings.title}</h1>
+      <main className="px-5 lg:px-10 py-8 max-w-2xl mx-auto animate-fade-up">
+        <h1 className="text-3xl font-semibold tracking-tight mb-8">{tr.settings.title}</h1>
 
         <div className="space-y-8">
           {sections.map(section => (
             <div key={section.title}>
-              <p className="text-xs uppercase tracking-wide text-mute font-bold mb-3">{section.title}</p>
-              <div className="bg-surface border border-border rounded-2xl overflow-hidden">
+              <p className="text-xs uppercase tracking-wide text-mute font-semibold mb-3">{section.title}</p>
+              <div className="card overflow-hidden">
                 {section.items.map((item, i) => (
                   <button
                     key={item.label}
@@ -268,7 +268,7 @@ export default function SettingsPage() {
                       i < section.items.length - 1 ? 'border-b border-border' : ''
                     } ${item.onClick ? 'hover:bg-subtle' : 'cursor-default'}`}
                   >
-                    <span className={`text-sm font-medium ${item.danger ? 'text-ink' : ''}`}>{item.label}</span>
+                    <span className={`text-sm font-medium ${item.danger ? 'text-negative' : ''}`}>{item.label}</span>
                     <div className="flex items-center gap-2">
                       {item.value && <span className="text-sm text-mute">{item.value}</span>}
                       {item.onClick && <ChevronRight size={16} className="text-mute" />}

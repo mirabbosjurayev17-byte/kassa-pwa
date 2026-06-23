@@ -17,13 +17,13 @@ export function LangSwitch({ variant = 'dark' }: { variant?: 'dark' | 'light' })
           : 'border border-border bg-surface hover:bg-subtle'
       }`}
     >
-      <span className={`text-xs font-bold ${
+      <span className={`text-xs font-semibold ${
         lang === 'uz'
           ? light ? 'text-white' : 'text-ink'
           : light ? 'text-white/40' : 'text-mute'
       }`}>UZ</span>
       <span className={`text-xs ${light ? 'text-white/30' : 'text-mute'}`}>/</span>
-      <span className={`text-xs font-bold ${
+      <span className={`text-xs font-semibold ${
         lang === 'ru'
           ? light ? 'text-white' : 'text-ink'
           : light ? 'text-white/40' : 'text-mute'

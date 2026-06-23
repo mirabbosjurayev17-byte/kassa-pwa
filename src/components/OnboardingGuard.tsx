@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useKassaStore } from '@/store/useKassaStore'
+import { BrandSplash } from '@/components/system/BrandSplash'
 
 export function OnboardingGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -25,11 +26,7 @@ export function OnboardingGuard({ children }: { children: React.ReactNode }) {
   }, [onboardingCompleted, pathname, router])
 
   if (!ready) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-6 h-6 rounded-full border-2 border-border border-t-ink animate-spin" />
-      </div>
-    )
+    return <BrandSplash />
   }
 
   return <>{children}</>

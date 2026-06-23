@@ -12,6 +12,7 @@ import {
   ResponsiveContainer, CartesianGrid,
 } from 'recharts'
 import { ChevronDown } from 'lucide-react'
+import { ScreenSkeleton } from '@/components/system/Skeleton'
 
 function getMonthRange(monthOffset: number, locale: string): { start: Date; end: Date; label: string } {
   const now = new Date()
@@ -136,24 +137,24 @@ export default function ReportsPage() {
       allCategories,
       `kassa-${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}.csv`
     )
-    showToast(`✓ ${monthly.length} ${tr.settings.updated.exported}`)
+    showToast(`${monthly.length} ${tr.settings.updated.exported}`)
   }
 
-  if (!mounted) return null
+  if (!mounted) return <ScreenSkeleton />
 
   return (
-    <main className="px-5 lg:px-10 py-8">
+    <main className="px-5 lg:px-10 py-8 max-w-6xl mx-auto animate-fade-up">
       {/* Header */}
       <div className="flex items-start justify-between mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-black tracking-tight">{tr.reports.title}</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">{tr.reports.title}</h1>
           <p className="text-sm text-mute mt-1">{tr.reports.subtitle}</p>
         </div>
         <div className="flex items-center gap-3 flex-shrink-0">
           <div ref={dropdownRef} className="relative">
             <button
               onClick={() => setDropdownOpen(o => !o)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border bg-surface text-sm font-bold hover:bg-subtle transition-colors capitalize"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border bg-surface text-sm font-semibold hover:bg-subtle transition-colors capitalize"
             >
               {monthLabel}
               <ChevronDown size={15} strokeWidth={2.5} className={`transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
@@ -165,7 +166,7 @@ export default function ReportsPage() {
                     key={opt.offset}
                     onClick={() => { setMonthOffset(opt.offset); setDropdownOpen(false) }}
                     className={`w-full text-left px-4 py-3 text-sm font-medium hover:bg-subtle transition-colors capitalize ${
-                      monthOffset === opt.offset ? 'font-bold text-ink' : 'text-mute'
+                      monthOffset === opt.offset ? 'font-semibold text-ink' : 'text-mute'
                     }`}
                   >
                     {opt.label}
@@ -176,7 +177,7 @@ export default function ReportsPage() {
           </div>
           <button
             onClick={handleExport}
-            className="px-4 py-2.5 rounded-xl border border-border bg-surface text-sm font-bold hover:bg-subtle transition-colors"
+            className="px-4 py-2.5 rounded-xl border border-border bg-surface text-sm font-semibold hover:bg-subtle transition-colors"
           >
             {tr.reports.export}
           </button>
@@ -184,13 +185,13 @@ export default function ReportsPage() {
       </div>
 
       {/* Hero profit */}
-      <div className="bg-surface rounded-2xl border border-border p-6 lg:p-8 mb-6">
-        <p className="text-xs uppercase tracking-wide text-mute font-bold">{tr.reports.monthlyProfit}</p>
+      <div className="card p-6 lg:p-8 mb-6">
+        <p className="text-xs uppercase tracking-wide text-mute font-semibold">{tr.reports.monthlyProfit}</p>
         <div className="flex items-baseline gap-4 mt-3">
-          <p className="text-5xl lg:text-6xl font-black tabular-nums tracking-tight">
+          <p className="text-5xl lg:text-6xl font-semibold tabular-nums tracking-tight">
             {formatNumber(monthlyProfit)}
           </p>
-          <p className="text-lg text-mute font-bold">so'm</p>
+          <p className="text-lg text-mute font-semibold">so'm</p>
         </div>
         {prevProfit > 0 && (
           <p className="text-sm text-mute mt-3">
@@ -201,22 +202,22 @@ export default function ReportsPage() {
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 mt-6 pt-6 border-t border-border">
           <div>
             <p className="text-xs text-mute font-medium mb-1">{tr.home.sales}</p>
-            <p className="text-lg font-bold tabular-nums">{formatNumber(monthlySales)}</p>
+            <p className="text-lg font-semibold tabular-nums">{formatNumber(monthlySales)}</p>
           </div>
           <div>
             <p className="text-xs text-mute font-medium mb-1">{tr.home.expense}</p>
-            <p className="text-lg font-bold tabular-nums">{formatNumber(monthlyExpenses)}</p>
+            <p className="text-lg font-semibold tabular-nums">{formatNumber(monthlyExpenses)}</p>
           </div>
           <div>
             <p className="text-xs text-mute font-medium mb-1">{tr.reports.transactions}</p>
-            <p className="text-lg font-bold tabular-nums">{monthly.length}</p>
+            <p className="text-lg font-semibold tabular-nums">{monthly.length}</p>
           </div>
         </div>
       </div>
 
       {/* Line chart */}
-      <div className="bg-surface rounded-2xl border border-border p-6 mb-6">
-        <h2 className="text-lg font-bold mb-1">{tr.reports.profitDynamics}</h2>
+      <div className="card p-6 mb-6">
+        <h2 className="text-lg font-semibold mb-1">{tr.reports.profitDynamics}</h2>
         <p className="text-xs text-mute mb-6 capitalize">{tr.reports.dailyProfit} — {monthLabel}</p>
         <div className="h-56 lg:h-72">
           <ResponsiveContainer width="100%" height="100%">
@@ -237,8 +238,8 @@ export default function ReportsPage() {
 
       {/* Top kategoriyalar */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-        <div className="bg-surface rounded-2xl border border-border p-6">
-          <h2 className="text-base font-bold mb-1">{tr.reports.topSale}</h2>
+        <div className="card p-6">
+          <h2 className="text-base font-semibold mb-1">{tr.reports.topSale}</h2>
           <p className="text-xs text-mute mb-5 capitalize">{monthLabel}</p>
           {topSale.length === 0 ? (
             <p className="text-sm text-mute">{tr.reports.noSales}</p>
@@ -247,8 +248,8 @@ export default function ReportsPage() {
               {topSale.map(c => (
                 <div key={c.label}>
                   <div className="flex items-center justify-between mb-1.5">
-                    <p className="text-sm font-bold">{c.label}</p>
-                    <p className="text-sm font-bold tabular-nums">{Math.round(c.pct)}%</p>
+                    <p className="text-sm font-semibold">{c.label}</p>
+                    <p className="text-sm font-semibold tabular-nums">{Math.round(c.pct)}%</p>
                   </div>
                   <div className="h-1.5 bg-subtle rounded-full overflow-hidden">
                     <div className="h-full bg-green rounded-full transition-all" style={{ width: `${c.pct}%` }} />
@@ -260,8 +261,8 @@ export default function ReportsPage() {
           )}
         </div>
 
-        <div className="bg-surface rounded-2xl border border-border p-6">
-          <h2 className="text-base font-bold mb-1">{tr.reports.topExpense}</h2>
+        <div className="card p-6">
+          <h2 className="text-base font-semibold mb-1">{tr.reports.topExpense}</h2>
           <p className="text-xs text-mute mb-5 capitalize">{monthLabel}</p>
           {topExpense.length === 0 ? (
             <p className="text-sm text-mute">{tr.reports.noExpenses}</p>
@@ -270,8 +271,8 @@ export default function ReportsPage() {
               {topExpense.map(c => (
                 <div key={c.label}>
                   <div className="flex items-center justify-between mb-1.5">
-                    <p className="text-sm font-bold">{c.label}</p>
-                    <p className="text-sm font-bold tabular-nums">{Math.round(c.pct)}%</p>
+                    <p className="text-sm font-semibold">{c.label}</p>
+                    <p className="text-sm font-semibold tabular-nums">{Math.round(c.pct)}%</p>
                   </div>
                   <div className="h-1.5 bg-subtle rounded-full overflow-hidden">
                     <div className="h-full bg-ink rounded-full transition-all" style={{ width: `${c.pct}%` }} />
@@ -286,15 +287,15 @@ export default function ReportsPage() {
 
       {/* Eng yaxshi kun */}
       {bestDay.foyda > 0 && (
-        <div className="bg-surface rounded-2xl border border-border p-6">
-          <p className="text-xs uppercase tracking-wide text-mute font-bold">{tr.reports.bestDay}</p>
-          <p className="text-base font-bold mt-2 capitalize">
+        <div className="card p-6">
+          <p className="text-xs uppercase tracking-wide text-mute font-semibold">{tr.reports.bestDay}</p>
+          <p className="text-base font-semibold mt-2 capitalize">
             {new Date(start.getFullYear(), start.getMonth(), bestDay.kun).toLocaleDateString(locale, {
               weekday: 'long', day: 'numeric', month: 'long',
             })}
           </p>
-          <p className="text-3xl font-black tabular-nums text-green-dark mt-2">
-            +{formatNumber(bestDay.foyda)} <span className="text-base text-mute font-bold">so'm</span>
+          <p className="text-3xl font-semibold tabular-nums text-green-dark mt-2">
+            +{formatNumber(bestDay.foyda)} <span className="text-base text-mute font-semibold">so'm</span>
           </p>
         </div>
       )}
