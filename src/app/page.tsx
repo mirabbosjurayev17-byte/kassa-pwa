@@ -180,7 +180,7 @@ export default function Home() {
         <div className="flex items-start justify-between">
           <div>
             <p className="text-white font-medium">{settings.businessName}</p>
-            <p className="text-white/45 text-xs mt-0.5">{settings.location} · {dateLabel}</p>
+            <p className="text-white/65 text-xs mt-0.5">{settings.location} · {dateLabel}</p>
           </div>
           <svg width="26" height="26" viewBox="0 0 512 512" fill="none" className="opacity-90">
             <g stroke="#00DF81" strokeWidth="50" strokeLinecap="round" strokeLinejoin="round">
@@ -191,14 +191,14 @@ export default function Home() {
 
         <div className="mt-7">
           <div className="flex items-center gap-2">
-            <p className="text-white/55 text-xs uppercase tracking-wider">{tr.home.todayProfit}</p>
+            <p className="text-white/70 text-xs uppercase tracking-wider">{tr.home.todayProfit}</p>
             <button onClick={() => setHideBalance(h => !h)} className="text-white/40 hover:text-white/70 transition-colors" aria-label="toggle">
               {hideBalance ? <EyeOff size={14} /> : <Eye size={14} />}
             </button>
           </div>
           <p className="text-white text-4xl lg:text-[2.75rem] font-semibold tabular-nums tracking-tight mt-2 leading-none">
             {hideBalance ? '• • • • • •' : formatNumber(todayProfit)}
-            {!hideBalance && <span className="text-xl text-white/40 font-normal ml-2">so'm</span>}
+            {!hideBalance && <span className="text-xl text-white/55 font-normal ml-2">so'm</span>}
           </p>
           {ydayProfit > 0 && (
             <div className="flex items-center gap-2 mt-4">
@@ -208,7 +208,7 @@ export default function Home() {
                 {profitDelta >= 0 ? <ArrowUpRight size={13} /> : <TrendingDown size={13} />}
                 {Math.abs(profitDelta)}%
               </span>
-              <span className="text-white/35 text-xs">{tr.home.yesterday}</span>
+              <span className="text-white/55 text-xs">{tr.home.yesterday}</span>
             </div>
           )}
         </div>
@@ -307,7 +307,7 @@ export default function Home() {
   return (
     <>
       {/* ───────── MOBILE ───────── */}
-      <main className="lg:hidden px-5 pt-6 space-y-5 max-w-xl mx-auto animate-fade-up">
+      <main className="lg:hidden px-5 pt-6 space-y-5 max-w-xl mx-auto">
         <div className="flex items-center justify-between">{greeting}{headerActions}</div>
         {heroCard}
         {quickActions}
@@ -339,7 +339,7 @@ export default function Home() {
       </main>
 
       {/* ───────── DESKTOP ───────── */}
-      <main className="hidden lg:block px-10 py-8 max-w-6xl mx-auto animate-fade-up">
+      <main className="hidden lg:block px-10 py-8 max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-7">{greeting}{headerActions}</div>
 
         <div className="grid grid-cols-12 gap-5">

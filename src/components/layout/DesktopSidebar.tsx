@@ -55,7 +55,7 @@ export function DesktopSidebar() {
             </g>
           </svg>
         </div>
-        <span className="font-semibold text-base tracking-tight">Kassa</span>
+        <span className="font-semibold text-base tracking-tight text-ink">Kassa</span>
       </div>
 
       {/* Nav */}

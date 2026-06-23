@@ -143,7 +143,7 @@ export default function ReportsPage() {
   if (!mounted) return <ScreenSkeleton />
 
   return (
-    <main className="px-5 lg:px-10 py-8 max-w-6xl mx-auto animate-fade-up">
+    <main className="px-5 lg:px-10 py-8 max-w-6xl mx-auto">
       {/* Header */}
       <div className="flex items-start justify-between mb-8 gap-4">
         <div>
@@ -239,7 +239,7 @@ export default function ReportsPage() {
       {/* Top kategoriyalar */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
         <div className="card p-6">
-          <h2 className="text-base font-semibold mb-1">{tr.reports.topSale}</h2>
+          <h2 className="text-base font-semibold text-ink mb-1">{tr.reports.topSale}</h2>
           <p className="text-xs text-mute mb-5 capitalize">{monthLabel}</p>
           {topSale.length === 0 ? (
             <p className="text-sm text-mute">{tr.reports.noSales}</p>
@@ -262,7 +262,7 @@ export default function ReportsPage() {
         </div>
 
         <div className="card p-6">
-          <h2 className="text-base font-semibold mb-1">{tr.reports.topExpense}</h2>
+          <h2 className="text-base font-semibold text-ink mb-1">{tr.reports.topExpense}</h2>
           <p className="text-xs text-mute mb-5 capitalize">{monthLabel}</p>
           {topExpense.length === 0 ? (
             <p className="text-sm text-mute">{tr.reports.noExpenses}</p>

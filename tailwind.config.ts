@@ -12,7 +12,7 @@ export default {
         base: '#EEF4F1',     // soft anti-flash mint background
         surface: '#FFFFFF',
         ink: '#021B1A',      // Rich Black (deep emerald-black)
-        mute: '#5E726B',     // muted stone-green
+        mute: '#4F615A',     // muted stone-green (AA contrast on light surfaces)
         border: '#DBE7E1',
         subtle: '#F1F7F6',   // Anti-Flash White
 

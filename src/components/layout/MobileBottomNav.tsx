@@ -24,20 +24,24 @@ export function MobileBottomNav() {
         key={item.href}
         href={item.href}
         aria-current={active ? 'page' : undefined}
-        className={`flex items-center gap-2 h-11 rounded-full transition-all duration-300 ${
-          active ? 'bg-white/12 px-4' : 'px-3'
+        className={`group flex items-center h-11 rounded-full overflow-hidden transition-[background-color,padding] duration-300 ease-out ${
+          active ? 'bg-white/12 px-4' : 'px-3.5 active:bg-white/5'
         }`}
       >
         <Icon
           size={21}
           strokeWidth={active ? 2.3 : 1.9}
-          className={active ? 'text-green-bright' : 'text-white/55'}
+          className={`flex-shrink-0 transition-colors duration-300 ${
+            active ? 'text-green-bright' : 'text-white/55 group-active:text-white/80'
+          }`}
         />
-        {active && (
-          <span className="text-[13px] font-medium text-white whitespace-nowrap">
-            {tr.nav[item.key]}
-          </span>
-        )}
+        <span
+          className={`whitespace-nowrap text-[13px] font-medium text-white transition-all duration-300 ease-out ${
+            active ? 'max-w-[100px] opacity-100 ml-2' : 'max-w-0 opacity-0 ml-0'
+          }`}
+        >
+          {tr.nav[item.key]}
+        </span>
       </Link>
     )
   }
@@ -49,7 +53,7 @@ export function MobileBottomNav() {
 
         <Link
           href="/transactions/new"
-          className="mx-0.5 w-12 h-12 rounded-full bg-green-bright flex items-center justify-center fab-glow active:scale-90 transition-transform"
+          className="mx-0.5 w-12 h-12 rounded-full bg-green-bright flex items-center justify-center fab-glow hover:brightness-105 active:scale-90 transition-all duration-200"
           aria-label={tr.home.addNew}
         >
           <Plus size={24} strokeWidth={2.5} className="text-ink" />

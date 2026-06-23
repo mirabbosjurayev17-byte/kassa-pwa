@@ -13,7 +13,7 @@ export default function StaffPage() {
     r === 'owner' ? (lang === 'uz' ? 'Ega' : 'Владелец') : (lang === 'uz' ? 'Sotuvchi' : 'Продавец')
 
   return (
-    <main className="px-5 lg:px-10 py-8 max-w-2xl mx-auto animate-fade-up">
+    <main className="px-5 lg:px-10 py-8 max-w-2xl mx-auto">
       <h1 className="text-3xl font-semibold tracking-tight mb-2">{tr.nav.staff}</h1>
       <p className="text-sm text-mute mb-8">
         {lang === 'uz'

@@ -9,7 +9,7 @@ export default function CategoriesPage() {
   const expenseCategories = useKassaStore(s => s.expenseCategories)
 
   return (
-    <main className="px-5 lg:px-10 py-8 max-w-3xl mx-auto animate-fade-up">
+    <main className="px-5 lg:px-10 py-8 max-w-3xl mx-auto">
       <h1 className="text-3xl font-semibold tracking-tight mb-8">{tr.nav.categories}</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

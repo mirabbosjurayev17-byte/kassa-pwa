@@ -70,7 +70,7 @@ export default function NewTransactionPage() {
   const canSave = amount > 0 && !!category && !isSubmitting
 
   return (
-    <main className="px-5 lg:px-10 py-6 lg:py-8 max-w-lg lg:max-w-4xl mx-auto animate-fade-up">
+    <main className="px-5 lg:px-10 py-6 lg:py-8 max-w-lg lg:max-w-4xl mx-auto">
       <div className="flex items-center gap-3 mb-6">
         <Link href="/" className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center hover:bg-subtle transition-colors">
           <ArrowLeft size={18} strokeWidth={2} />

@@ -251,7 +251,7 @@ export default function SettingsPage() {
 
   return (
     <>
-      <main className="px-5 lg:px-10 py-8 max-w-2xl mx-auto animate-fade-up">
+      <main className="px-5 lg:px-10 py-8 max-w-2xl mx-auto">
         <h1 className="text-3xl font-semibold tracking-tight mb-8">{tr.settings.title}</h1>
 
         <div className="space-y-8">

@@ -70,7 +70,7 @@ export default function TransactionsPage() {
   if (!mounted) return <ScreenSkeleton />
 
   return (
-    <main className="px-5 lg:px-10 py-8 max-w-5xl mx-auto animate-fade-up">
+    <main className="px-5 lg:px-10 py-8 max-w-5xl mx-auto">
       <h1 className="text-3xl font-semibold tracking-tight mb-6">{tr.transactions.title}</h1>
 
       {/* Filter */}
